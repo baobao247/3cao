@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bài Cào Rix Pro – Nặn Bài Thần Thánh</title>
+    <style>
+        /* ===== RESET & ROOT ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        :root {
+            --bg-dark: #020617;
+            --table-felt: radial-gradient(ellipse at center, #0b6235 0%, #04381c 70%, #011d0e 100%);
+            --gold: #fbbf24;
+            --rix: #f59e0b;
+            --card-w: clamp(30px, 8vw, 42px);
+            --card-h: calc(var(--card-w) * 1.4);
+        }
+        body {
+            background: var(--bg-dark);
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 6px 4px;
+            overflow-x: hidden;
+        }
+        .casino-header {
+            text-align: center;
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+        .casino-title {
+            font-size: clamp(1.2rem, 4.5vw, 1.7rem);
+            background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 1px;
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.3));
+        }
+        .sub-title {
+            font-size: 0.6rem;
+            color: #94a3b8;
+            margin-top: -2px;
+        }
+        .table-container {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            margin: 12px 0 8px 0;
+        }
+        .poker-table {
+            position: relative;
+            width: 100%;
+            height: clamp(410px, 62vh, 530px);
+            background: var(--table-felt);
+            border: 12px solid #2d120d;
+            border-radius: 200px;
+            box-shadow: 0 0 0 2px var(--gold), inset 0 0 90px rgba(0,0,0,0.95), 0 12px 30px rgba(0,0,0,0.9);
+            overflow: visible;
+            transition: transform 0.1s ease;
+            animation: tableGlow 3s ease-in-out infinite alternate;
+        }
+        @keyframes tableGlow {
+            0% { box-shadow: 0 0 0 2px var(--gold), inset 0 0 90px rgba(0,0,0,0.95), 0 12px 30px rgba(0,0,0,0.9); }
+            100% { box-shadow: 0 0 0 4px #fcd34d, inset 0 0 100px rgba(0,0,0,0.95), 0 12px 35px rgba(251,191,36,0.2); }
+        }
+        .poker-table.shake {
+            animation: shake 0.3s ease-in-out;
+        }
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(1.5deg); }
+            75% { transform: rotate(-1.5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .table-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+            width: 100%;
+            max-width: 220px;
+        }
+        .pot-box {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1.5px solid var(--gold);
+            padding: 4px 14px;
+            border-radius: 20px;
+            color: var(--gold);
+            font-weight: 900;
+            font-size: clamp(0.8rem, 3vw, 1.0rem);
+            box-shadow: 0 0 14px rgba(251,191,36,0.4);
+            text-align: center;
+            line-height: 1.3;
+        }
+        .pot-box small {
+            display: block;
+            font-size: 0.55rem;
+            color: #94a3b8;
+            font-weight: 400;
+        }
+        .community-cards {
+            display: flex;
+            gap: 3px;
+            min-height: var(--card-h);
+            justify-content: center;
+            align-items: center;
+        }
+        .seat {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+        }
+        .seat-top { top: 12px; left: 50%; transform: translateX(-50%); width: 105px; }
+        .seat-left { top: 50%; left: 4px; transform: translateY(-50%); width: 82px; }
+        .seat-right { top: 50%; right: 4px; transform: translateY(-50%); width: 82px; }
+        .seat-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); width: 115px; }
+        .avatar-box {
+            position: relative;
+            background: rgba(15,23,42,0.92);
+            border: 1.5px solid #475569;
+            border-radius: 8px;
+            padding: 3px 4px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            transition: all 0.25s ease;
+        }
+        .seat.winner .avatar-box {
+            border-color: #4ade80;
+            box-shadow: 0 0 22px #4ade80;
+            animation: pulse-win 0.8s infinite alternate;
+        }
+        .seat.dealer .avatar-box {
+            border-color: #f59e0b;
+            box-shadow: 0 0 14px rgba(245,158,11,0.5);
+        }
+        @keyframes pulse-win {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+        .player-name {
+            font-weight: 800;
+            font-size: clamp(0.58rem,2vw,0.73rem);
+            color: #f8fafc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .player-chips {
+            color: var(--rix);
+            font-weight: 800;
+            font-size: clamp(0.56rem,1.9vw,0.70rem);
+        }
+        .chip-bar {
+            width: 100%;
+            height: 4px;
+            background: #1e293b;
+            border-radius: 2px;
+            margin-top: 2px;
+            overflow: hidden;
+        }
+        .chip-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--rix), var(--gold));
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        .speech-bubble {
+            position: absolute;
+            top: -24px;
+            background: var(--gold);
+            color: #0f172a;
+            font-weight: 800;
+            font-size: 0.62rem;
+            padding: 2px 7px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform: translateY(4px);
+            z-index: 50;
+            white-space: nowrap;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+        .speech-bubble.show { opacity: 1; transform: translateY(0); }
+        .seat-top .speech-bubble { top: 2px; left: 102%; transform: translateX(0); }
+        .cards-row {
+            display: flex;
+            gap: 3px;
+            margin: 2px 0;
+            min-height: var(--card-h);
+            justify-content: center;
+        }
+        .card-container {
+            perspective: 1000px;
+            width: var(--card-w);
+            height: var(--card-h);
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);
+            transform-style: preserve-3d;
+        }
+        .card-container.flipped .card-inner { transform: rotateY(180deg); }
+        .card-container.nan-card .card-inner {
+            transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2px 3px;
+            font-weight: 900;
+            font-size: clamp(0.68rem,2.2vw,0.82rem);
+        }
+        .card-front {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            transform: rotateY(180deg);
+        }
+        .card-front.red { color: #dc2626; }
+        .card-front.black { color: #0f172a; }
+        .card-front .suit { align-self: flex-end; font-size: 0.78rem; line-height: 1; }
+        .card-back {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
+            border: 1px solid var(--gold);
+            transform: rotateY(0deg);
+        }
+        .card-container.glow-gold .card-front {
+            box-shadow: 0 0 20px var(--gold), 0 0 40px rgba(251,191,36,0.4);
+            border-color: var(--gold);
+        }
+        .card-container.glow-blue .card-front {
+            box-shadow: 0 0 20px #3b82f6, 0 0 40px rgba(59,130,246,0.3);
+            border-color: #3b82f6;
+        }
+        .card-container.glow-red .card-front {
+            box-shadow: 0 0 20px #ef4444, 0 0 40px rgba(239,68,68,0.3);
+            border-color: #ef4444;
+        }
+        .card-container.glow-rainbow .card-front {
+            box-shadow: 0 0 30px #fbbf24, 0 0 60px #f59e0b, 0 0 90px #ef4444;
+            border-color: #fbbf24;
+            animation: glowRainbow 0.6s ease-in-out infinite alternate;
+        }
+        @keyframes glowRainbow {
+            0% { box-shadow: 0 0 20px #fbbf24, 0 0 40px #f59e0b; }
+            100% { box-shadow: 0 0 40px #fbbf24, 0 0 80px #f59e0b, 0 0 120px #ef4444; }
+        }
+        .charge-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .charge-effect.active {
+            opacity: 1;
+            animation: chargePulse 0.8s ease-in-out infinite alternate;
+        }
+        @keyframes chargePulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        }
+        .charge-ring {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid var(--gold);
+            box-shadow: 0 0 40px var(--gold), inset 0 0 40px rgba(251,191,36,0.3);
+            background: radial-gradient(circle, rgba(251,191,36,0.15) 0%, transparent 70%);
+            position: relative;
+        }
+        .charge-ring::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 3px dashed rgba(251,191,36,0.3);
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .charge-text {
+            position: absolute;
+            top: calc(50% + 55px);
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 0.9rem;
+            text-shadow: 0 0 30px var(--gold), 0 0 60px #f59e0b;
+            white-space: nowrap;
+            animation: textGlow 0.5s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+        }
+        @keyframes textGlow {
+            0% { opacity: 0.5; text-shadow: 0 0 15px var(--gold); }
+            100% { opacity: 1; text-shadow: 0 0 40px var(--gold), 0 0 80px #f59e0b; }
+        }
+        .charge-bolt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: var(--gold);
+            text-shadow: 0 0 40px var(--gold);
+            animation: boltFade 0.5s ease-in-out infinite alternate;
+            opacity: 0.6;
+        }
+        @keyframes boltFade {
+            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        }
+        .flying-card {
+            position: fixed;
+            width: var(--card-w);
+            height: var(--card-h);
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            z-index: 999;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.7);
+        }
+        .controls-area {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .mode-selector {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .mode-btn {
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 2px solid #475569;
+            background: #0f172a;
+            color: #94a3b8;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mode-btn.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: #1e293b;
+            box-shadow: 0 0 12px rgba(251,191,36,0.2);
+        }
+        .action-btns {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            width: 100%;
+        }
+        .btn {
+            padding: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .btn:active { transform: scale(0.96); }
+        .btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(1); }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-purple { background: #8b5cf6; color: white; }
+        .btn-next { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: white; grid-column: span 2; }
+        .btn-dealer-select {
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #475569;
+        }
+        .btn-dealer-select.active-dealer {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: #0f172a;
+        }
+        .btn-flip-all {
+            background: #6366f1;
+            color: white;
+        }
+        .bet-group {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .bet-group input[type="number"] {
+            width: 80px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+            font-weight: bold;
+            text-align: center;
+            background: #0f172a;
+            color: var(--gold);
+            font-size: 0.85rem;
+        }
+        .bet-group .btn-step {
+            background: #1e293b;
+            color: var(--gold);
+            border: 1px solid rgba(255,255,255,0.15);
+            width: 36px;
+            height: 36px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .status-bar {
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            padding: 2px 0;
+            min-height: 20px;
+            border-bottom: 1px solid #1e293b;
+        }
+        .log-box {
+            width: 100%;
+            max-width: 480px;
+            height: 75px;
+            background: rgba(7,10,18,0.95);
+            margin-top: 4px;
+            border-radius: 8px;
+            padding: 6px 10px;
+            overflow-y: auto;
+            font-size: 0.72rem;
+            border: 1px solid #1e293b;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        .log-line { margin-bottom: 2px; color: #94a3b8; }
+        .log-line.gold { color: var(--gold); font-weight: bold; }
+        .log-line.alert { color: #f87171; font-weight: bold; }
+        .log-line.winner { color: #4ade80; font-weight: bold; }
+        .log-line.special { color: #f472b6; font-weight: bold; }
+        .footer {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            padding: 12px 0 6px 0;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+        .rainbow-text {
+            background: linear-gradient(270deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #5f27cd);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 4s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .firework {
+            position: fixed;
+            pointer-events: none;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: firework-burst 0.8s ease-out forwards;
+        }
+        @keyframes firework-burst {
+            0% { transform: translate(0,0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+        @media (max-width: 480px) {
+            .action-btns { grid-template-columns: repeat(2,1fr); }
+            .btn-next { grid-column: span 2; }
+            .mode-selector .mode-btn { font-size: 0.65rem; padding: 4px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="casino-header">
+        <div class="casino-title">🃏 Bài Cào Rix Pro 🃏</div>
+        <div class="sub-title">⚡ Nặn bài từng lá · Kịch tính · Đỉnh cao</div>
+    </div>
+    <div class="table-container">
+        <div class="poker-table" id="poker-table">
+            <div class="table-center">
+                <div class="pot-box" id="pot-display">🪙 TIỀN GIỮA: 0</div>
+                <div class="community-cards" id="community-cards"></div>
+                <div class="charge-effect" id="charge-effect">
+                    <div class="charge-ring"></div>
+                    <div class="charge-bolt">⚡</div>
+                    <div class="charge-text">TỤ LỰC</div>
+                </div>
+            </div>
+            <div class="seat seat-top" id="seat-2">
+                <div class="speech-bubble" id="bubble-2">😎</div>
+                <div class="avatar-box">
+                    <div class="player-name" id="name-2">Bot 2</div>
+                    <div class="player-chips" id="chips-2">0 🪙</div>
+                    <div class="chip-bar"><div class="chip-bar-fill" id="chipbar-2" style="width:100%"></div></div>
+                </div>
+                <div class="cards-row" id="cards-2"></div>
+            </div>
+            <div class="seat seat-left" id="seat-1">
+                <div class="speech-bubble" id="bubble-1">😎</div>
+                <div class="avatar-box">
+                    <div class="player-name" id="name-1">Bot 1</div>
+                    <div class="player-chips" id="chips-1">0 🪙</div>
+                    <div class="chip-bar"><div class="chip-bar-fill" id="chipbar-1" style="width:100%"></div></div>
+                </div>
+                <div class="cards-row" id="cards-1"></div>
+            </div>
+            <div class="seat seat-right" id="seat-3">
+                <div class="speech-bubble" id="bubble-3">😎</div>
+                <div class="avatar-box">
+                    <div class="player-name" id="name-3">Bot 3</div>
+                    <div class="player-chips" id="chips-3">0 🪙</div>
+                    <div class="chip-bar"><div class="chip-bar-fill" id="chipbar-3" style="width:100%"></div></div>
+                </div>
+                <div class="cards-row" id="cards-3"></div>
+            </div>
+            <div class="seat seat-bottom" id="seat-0">
+                <div class="speech-bubble" id="bubble-0">😎</div>
+                <div class="cards-row" id="cards-0"></div>
+                <div class="avatar-box">
+                    <div class="player-name" id="name-0">Bạn</div>
+                    <div class="player-chips" id="chips-0">0 🪙</div>
+                    <div class="chip-bar"><div class="chip-bar-fill" id="chipbar-0" style="width:100%"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="controls-area">
+        <div class="mode-selector">
+            <button class="mode-btn active" id="mode-turtle" onclick="setGameMode('turtle')">🐢 Cào Rùa</button>
+            <button class="mode-btn" id="mode-dealer" onclick="setGameMode('dealer')">🏦 Cào Cái</button>
+            <button class="mode-btn btn-dealer-select" id="dealer-select-human" onclick="selectDealer(0)">🧑 Cái: Bạn</button>
+            <button class="mode-btn btn-dealer-select" id="dealer-select-bot" onclick="selectDealer(-1)">🤖 Cái: Bot</button>
+        </div>
+        <div class="status-bar" id="status-bar">🎯 Đặt cược và chia bài!</div>
+        <div class="bet-group">
+            <button class="btn-step" onclick="adjustBet(-5)">−5</button>
+            <input type="number" id="bet-amount" value="10" min="5" step="5">
+            <button class="btn-step" onclick="adjustBet(5)">+5</button>
+            <button class="btn btn-success" id="btn-bet" onclick="placeBet()">💰 Đặt cược</button>
+        </div>
+        <div class="action-btns">
+            <button class="btn btn-primary" id="btn-deal" onclick="dealCards()" disabled>🃏 Chia bài</button>
+            <button class="btn btn-warning" id="btn-peek" onclick="nanCardStep()" disabled>👀 Nặn bài</button>
+            <button class="btn btn-flip-all" id="btn-flip-all" onclick="flipAllCards()" disabled>🔓 Lật bài</button>
+            <button class="btn btn-purple" id="btn-showdown" onclick="showdown()" disabled>🏆 Kết quả</button>
+            <button class="btn btn-next" id="btn-next" onclick="resetForNextRound()" style="display:none;">Ván tiếp ➔</button>
+        </div>
+    </div>
+    <div class="log-box" id="log-box"></div>
+    <div class="footer">
+        <span class="rainbow-text">♡ <span id="app-version">050826.07</span> from bao with love ♡</span>
+    </div>
+    <script>
+        // ============================================================
+        // 0. APP VERSION (tự động tăng)
+        // ============================================================
+        const APP_VERSION = '050826.07';
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('app-version').textContent = APP_VERSION;
+        });
+
+        // ============================================================
+        // 1. SOUND
+        // ============================================================
+        const Sound = {
+            ctx: null,
+            init() { if (!this.ctx) this.ctx = new(window.AudioContext || window.webkitAudioContext)(); },
+            playCard() {
+                this.init();
+                const osc = this.ctx.createOscillator(),
+                    g = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(480, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.08);
+                g.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+                osc.connect(g);
+                g.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.08);
+            },
+            playChip() {
+                this.init();
+                const osc = this.ctx.createOscillator(),
+                    g = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(1350, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(450, this.ctx.currentTime + 0.06);
+                g.gain.setValueAtTime(0.18, this.ctx.currentTime);
+                g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.06);
+                osc.connect(g);
+                g.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.06);
+            },
+            playWin() {
+                this.init();
+                [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator(),
+                        g = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.1);
+                    g.gain.setValueAtTime(0.2, this.ctx.currentTime + idx * 0.1);
+                    g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + idx * 0.1 + 0.22);
+                    osc.connect(g);
+                    g.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.1);
+                    osc.stop(this.ctx.currentTime + idx * 0.1 + 0.22);
+                });
+            },
+            playShake() {
+                this.init();
+                const osc = this.ctx.createOscillator(),
+                    g = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(40, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.15);
+                g.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+                osc.connect(g);
+                g.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.15);
+            },
+            playAngry() {
+                this.init();
+                const osc = this.ctx.createOscillator(),
+                    g = this.ctx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(200, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(100, this.ctx.currentTime + 0.2);
+                g.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.2);
+                osc.connect(g);
+                g.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.2);
+            },
+            playHappy() {
+                this.init();
+                const notes = [523, 659, 784];
+                notes.forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator(),
+                        g = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.08);
+                    g.gain.setValueAtTime(0.15, this.ctx.currentTime + i * 0.08);
+                    g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.08 + 0.12);
+                    osc.connect(g);
+                    g.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + i * 0.08);
+                    osc.stop(this.ctx.currentTime + i * 0.08 + 0.12);
+                });
+            },
+            playBaCao() {
+                this.init();
+                [523, 659, 784, 1047, 784, 659].forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator(),
+                        g = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + i * 0.1);
+                    g.gain.setValueAtTime(0.2, this.ctx.currentTime + i * 0.1);
+                    g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.1 + 0.15);
+                    osc.connect(g);
+                    g.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + i * 0.1);
+                    osc.stop(this.ctx.currentTime + i * 0.1 + 0.15);
+                });
+            },
+            playCharge() {
+                this.init();
+                const osc = this.ctx.createOscillator(),
+                    g = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(220, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(440, this.ctx.currentTime + 0.3);
+                g.gain.setValueAtTime(0.1, this.ctx.currentTime);
+                g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
+                osc.connect(g);
+                g.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.3);
+            }
+        };
+
+        // ============================================================
+        // 2. HELPERS
+        // ============================================================
+        function fmt(n) {
+            if (n >= 1e6) return (n / 1e6).toFixed(1).replace('.0', '') + 'M 🪙';
+            if (n >= 1e3) return (n / 1e3).toFixed(1).replace('.0', '') + 'K 🪙';
+            return Math.floor(n) + ' 🪙';
+        }
+        function shuffleArray(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math
+                    .random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        // ============================================================
+        // 3. CELEBRITY POOL (VIỆT NAM HOT 2025-2026)
+        // ============================================================
+        const CELEB_POOL = [
+            { name: "Sơn Tùng M-TP", style: "aggressive" },
+            { name: "Đen Vâu", style: "smart" },
+            { name: "Hồ Ngọc Hà", style: "tight" },
+            { name: "Noo Phước Thịnh", style: "aggressive" },
+            { name: "Bích Phương", style: "smart" },
+            { name: "Hương Giang", style: "wild" },
+            { name: "Chi Pu", style: "tight" },
+            { name: "Trấn Thành", style: "wild" },
+            { name: "Hoài Linh", style: "smart" },
+            { name: "Việt Hương", style: "tight" },
+            { name: "Miu Lê", style: "aggressive" },
+            { name: "Isaac", style: "smart" },
+            { name: "Lương Bích Hữu", style: "tight" },
+            { name: "Phan Đinh Tùng", style: "aggressive" },
+            { name: "Uyên Linh", style: "smart" },
+            { name: "Phương Ly", style: "wild" },
+            { name: "Ngô Kiến Huy", style: "tight" },
+            { name: "Jun Phạm", style: "aggressive" },
+            { name: "Ali Hoàng Dương", style: "smart" },
+            { name: "K-ICM", style: "wild" },
+            { name: "JACK", style: "aggressive" },
+            { name: "RPT MCK", style: "smart" },
+            { name: "Đạt G", style: "tight" },
+            { name: "Karik", style: "wild" },
+            { name: "Binz", style: "aggressive" },
+            { name: "JustaTee", style: "smart" },
+            { name: "Lynk Lee", style: "tight" },
+            { name: "Lâm Vỹ Dạ", style: "wild" },
+            { name: "Cường Seven", style: "aggressive" },
+            { name: "Thùy Chi", style: "smart" }
+        ];
+        let shuffledCelebs = shuffleArray(CELEB_POOL);
+        let activeCelebs = shuffledCelebs.slice(0, 3);
+        let benchPool = shuffledCelebs.slice(3);
+
+        function getRandomBotStack() { return Math.floor(Math.random() * 151 + 50) * 10; }
+
+        // ============================================================
+        // 4. GAME STATE
+        // ============================================================
+        const INITIAL_CHIPS = 1000;
+        const REVIVE_CHIPS = 100;
+
+        let gameMode = 'turtle';
+        let players = [];
+        let deck = [];
+        let pot = 0;
+        let allBets = [];
+        let dealerIndex = -1;
+        let gameState = 'IDLE'; // IDLE, BETTING, DEALING, SHOWDOWN
+        let myCardsRevealed = false;
+        let roundWinners = [];
+        let isNanning = false;
+        let nanningPhase = 0;
+        let expectedRanks = [];
+        let expectedType = 'none';
+        let expectedName = '';
+        let cardsFlippedManually = false;
+        let playerCardElements = [];
+
+        const betInput = document.getElementById('bet-amount');
+        const statusBar = document.getElementById('status-bar');
+        const chargeEffect = document.getElementById('charge-effect');
+
+        // ============================================================
+        // 5. UI FUNCTIONS
+        // ============================================================
+        function log(msg, type = '') {
+            const box = document.getElementById('log-box');
+            const line = document.createElement('div');
+            line.className = `log-line ${type}`;
+            line.innerHTML = msg;
+            box.insertBefore(line, box.firstChild);
+        }
+
+        function showSpeech(pIdx, text) {
+            const bubble = document.getElementById(`bubble-${pIdx}`);
+            bubble.innerText = text;
+            bubble.classList.add('show');
+            setTimeout(() => bubble.classList.remove('show'), 1600);
+        }
+
+        function setStatus(msg) { statusBar.innerText = msg; }
+
+        function adjustBet(delta) {
+            let val = parseInt(betInput.value) || 10;
+            val = Math.max(5, val + delta);
+            betInput.value = val;
+        }
+
+        function createDeck() {
+            const suits = ['♠', '♥', '♦', '♣'];
+            const ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+            const rankNames = { 1: 'A', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: '10', 11: 'J',
+                12: 'Q', 13: 'K' };
+            deck = [];
+            for (const s of suits)
+                for (const r of ranks) deck.push({ suit: s, rank: r, name: rankNames[r] });
+            deck = shuffleArray(deck);
+        }
+
+        function create3DCardElement(card, isFaceUp = false, glow = '') {
+            const container = document.createElement('div');
+            container.className = `card-container ${isFaceUp ? 'flipped' : ''}`;
+            if (glow) container.classList.add(glow);
+            const isRed = card.suit === '♥' || card.suit === '♦';
+            container.innerHTML =
+                `
+                <div class="card-inner">
+                    <div class="card-back"></div>
+                    <div class="card-front ${isRed ? 'red' : 'black'}">
+                        <div>${card.name}</div>
+                        <div class="suit">${card.suit}</div>
+                    </div>
+                </div>
+            `;
+            return container;
+        }
+
+        function renderAllCards(forceReveal = false) {
+            players.forEach((p, i) => {
+                const cardContainer = document.getElementById(`cards-${i}`);
+                cardContainer.innerHTML = '';
+                if (p.hand && p.hand.length > 0) {
+                    const isHuman = p.isHuman;
+                    const showAll = forceReveal || (gameState === 'SHOWDOWN') || (isHuman && myCardsRevealed) || (isHuman &&
+                        cardsFlippedManually);
+                    p.hand.forEach((c, idx) => {
+                        let isFlipped = showAll;
+                        if (isNanning && isHuman && gameState === 'DEALING' && !cardsFlippedManually) {
+                            isFlipped = idx < nanningPhase;
+                        }
+                        const el = create3DCardElement(c, isFlipped);
+                        if (isNanning && isHuman && gameState === 'DEALING') {
+                            el.classList.add('nan-card');
+                            el.style.transitionDelay = (idx * 0.15) + 's';
+                        }
+                        cardContainer.appendChild(el);
+                        if (isHuman) {
+                            if (!playerCardElements[i]) playerCardElements[i] = [];
+                            playerCardElements[i][idx] = el;
+                        }
+                    });
+                }
+                const seat = document.getElementById(`seat-${i}`);
+                seat.classList.remove('winner', 'dealer');
+                if (roundWinners.some(w => w.index === i)) seat.classList.add('winner');
+                if (dealerIndex === i) seat.classList.add('dealer');
+            });
+        }
+
+        function updateUI() {
+            document.getElementById('pot-display').innerHTML = `🪙 TIỀN GIỮA: ${fmt(pot)}`;
+
+            const totalChips = players.reduce((s, p) => s + p.chips, 0) || 1;
+            players.forEach((p, i) => {
+                document.getElementById(`name-${i}`).innerText = p.name;
+                document.getElementById(`chips-${i}`).innerText = fmt(p.chips);
+                const bar = document.getElementById(`chipbar-${i}`);
+                if (bar) {
+                    const pct = Math.min(100, Math.max(0, (p.chips / totalChips) * 100));
+                    bar.style.width = pct + '%';
+                }
+            });
+
+            const isIdle = gameState === 'IDLE';
+            const isBetting = gameState === 'BETTING';
+            const isDealing = gameState === 'DEALING';
+            const isShowdown = gameState === 'SHOWDOWN';
+            const canNan = isDealing && !isShowdown && !isNanning && nanningPhase < 3 && !cardsFlippedManually;
+            const canFlipAll = isDealing && !isShowdown && !isNanning && !cardsFlippedManually && nanningPhase < 3;
+            const canShowdown = isDealing && !isNanning && (nanningPhase >= 3 || cardsFlippedManually);
+
+            document.getElementById('btn-bet').disabled = !(isIdle || isBetting);
+            document.getElementById('btn-deal').disabled = !isBetting;
+            document.getElementById('btn-peek').disabled = !canNan;
+            document.getElementById('btn-flip-all').disabled = !canFlipAll;
+            document.getElementById('btn-showdown').disabled = !canShowdown;
+            document.getElementById('btn-next').style.display = isShowdown ? 'block' : 'none';
+
+            if (isDealing && nanningPhase === 2 && (expectedRanks.length > 0 || expectedType === 'ba_cao') && !cardsFlippedManually) {
+                chargeEffect.classList.add('active');
+                if (!chargeEffect.dataset.charged) {
+                    Sound.playCharge();
+                    chargeEffect.dataset.charged = 'true';
+                }
+            } else {
+                chargeEffect.classList.remove('active');
+                delete chargeEffect.dataset.charged;
+            }
+        }
+
+        // ============================================================
+        // 6. GAME LOGIC
+        // ============================================================
+        function initPlayers() {
+            const botNames = activeCelebs.map(c => c.name);
+            const botStyles = activeCelebs.map(c => c.style);
+            players = [
+                { id: 0, name: "Bạn", chips: INITIAL_CHIPS, hand: [], isHuman: true, bet: 0, style: 'smart' },
+                { id: 1, name: botNames[0], chips: getRandomBotStack(), hand: [], isHuman: false, bet: 0, style: botStyles[0] },
+                { id: 2, name: botNames[1], chips: getRandomBotStack(), hand: [], isHuman: false, bet: 0, style: botStyles[1] },
+                { id: 3, name: botNames[2], chips: getRandomBotStack(), hand: [], isHuman: false, bet: 0, style: botStyles[2] }
+            ];
+            players.forEach((p, i) => { document.getElementById(`name-${i}`).innerText = p.name; });
+        }
+
+        function resetRound() {
+            players.forEach(p => { p.hand = [];
+                p.bet = 0; });
+            pot = 0;
+            allBets = [];
+            myCardsRevealed = false;
+            roundWinners = [];
+            isNanning = false;
+            nanningPhase = 0;
+            expectedRanks = [];
+            expectedType = 'none';
+            expectedName = '';
+            cardsFlippedManually = false;
+            playerCardElements = [];
+            gameState = 'IDLE';
+            document.querySelectorAll('.seat').forEach(s => s.classList.remove('winner'));
+            chargeEffect.classList.remove('active');
+            delete chargeEffect.dataset.charged;
+            setStatus('🎯 Đặt cược và chia bài!');
+            updateUI();
+        }
+
+        function calcScore(hand) {
+            if (!hand || hand.length !== 3) return { score: 0, isBaCao: false };
+            const allFace = hand.every(c => c.rank >= 11 && c.rank <= 13);
+            if (allFace) return { score: 10, isBaCao: true };
+            let total = 0;
+            hand.forEach(c => {
+                if (c.rank === 1) total += 1;
+                else if (c.rank >= 11) total += 10;
+                else total += c.rank;
+            });
+            const score = total % 10;
+            return { score: score, isBaCao: false };
+        }
+
+        function compareHands(handA, handB) {
+            const a = calcScore(handA),
+                b = calcScore(handB);
+            if (a.isBaCao && b.isBaCao) return 0;
+            if (a.isBaCao) return 1;
+            if (b.isBaCao) return -1;
+            if (a.score > b.score) return 1;
+            if (a.score < b.score) return -1;
+            return 0;
+        }
+
+        // ===== BOT CƯỢC MẠNH HƠN THEO PHONG CÁCH =====
+        function botBetStrategy(playerIdx) {
+            const p = players[playerIdx];
+            if (!p || p.isHuman) return 0;
+            const score = calcScore(p.hand);
+            const style = p.style || 'smart';
+
+            // Tỷ lệ tối đa theo phong cách
+            let maxRatio = 0.4;
+            if (style === 'aggressive') maxRatio = 0.65;
+            else if (style === 'wild') maxRatio = 0.55;
+            else if (style === 'tight') maxRatio = 0.25;
+            else if (style === 'smart') maxRatio = 0.45;
+
+            // Điều chỉnh theo sức mạnh bài
+            let base = 0;
+            if (score.isBaCao) base = 0.8;
+            else if (score.score >= 8) base = 0.7;
+            else if (score.score >= 6) base = 0.5;
+            else if (score.score >= 4) base = 0.35;
+            else base = 0.15;
+
+            // Nếu là vòng đặt cược (trước khi chia bài) ta chưa có bài, dùng ngẫu nhiên
+            if (!p.hand || p.hand.length === 0) {
+                base = 0.2 + Math.random() * 0.2;
+            }
+
+            let maxBet = Math.floor(p.chips * maxRatio);
+            let minBet = Math.max(5, Math.floor(p.chips * 0.05));
+            let target = Math.floor(maxBet * base);
+            if (target < minBet) target = minBet;
+            if (target > maxBet) target = maxBet;
+            return target;
+        }
+
+        // ============================================================
+        // 7. ĐÁNH GIÁ TIỀM NĂNG
+        // ============================================================
+        function evaluatePotential(twoCards) {
+            if (twoCards.length !== 2) return { expectedRanks: [], type: 'none', expectedName: '' };
+
+            const allFace = twoCards.every(c => c.rank >= 11 && c.rank <= 13);
+            if (allFace) {
+                return { expectedRanks: [], type: 'ba_cao', expectedName: 'Tây (J/Q/K)' };
+            }
+
+            let sum = 0;
+            twoCards.forEach(c => {
+                if (c.rank === 1) sum += 1;
+                else if (c.rank >= 11) sum += 10;
+                else sum += c.rank;
+            });
+
+            let candidates = [];
+            for (let r = 1; r <= 13; r++) {
+                let val = r === 1 ? 1 : (r >= 11 ? 10 : r);
+                if ((sum + val) % 10 === 9) {
+                    candidates.push(r);
+                }
+            }
+
+            if (candidates.length === 0) {
+                return { expectedRanks: [], type: 'none', expectedName: '' };
+            }
+
+            let displayName = '';
+            const hasTen = candidates.includes(10);
+            const hasTay = candidates.some(r => r >= 11);
+
+            if (hasTen && hasTay) {
+                displayName = '10 hoặc Tây (J/Q/K)';
+            } else if (hasTen) {
+                displayName = '10';
+            } else if (hasTay) {
+                const tayRanks = candidates.filter(r => r >= 11).map(r => getRankName(r));
+                displayName = tayRanks.join('/');
+            } else {
+                displayName = getRankName(candidates[0]);
+            }
+
+            return {
+                expectedRanks: candidates,
+                type: 'nut9',
+                expectedName: displayName
+            };
+        }
+
+        function getRankName(rank) {
+            const names = { 1: 'A', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: '10', 11: 'J',
+                12: 'Q', 13: 'K' };
+            return names[rank] || rank;
+        }
+
+        // ============================================================
+        // 8. ĐẶT CƯỢC
+        // ============================================================
+        function placeBet() {
+            if (gameState === 'SHOWDOWN') {
+                log('Ván đã kết thúc, bấm "Ván tiếp" để chơi mới.', 'alert');
+                return;
+            }
+            const human = players[0];
+            let amount = parseInt(betInput.value) || 10;
+            if (amount < 5) amount = 5;
+
+            if (gameMode === 'turtle') {
+                if (amount > human.chips) {
+                    log(`Bạn chỉ có ${fmt(human.chips)}, không đủ cược!`, 'alert');
+                    return;
+                }
+                human.chips -= amount;
+                human.bet = amount;
+                pot += amount;
+                allBets[0] = amount;
+                Sound.playChip();
+                for (let i = 1; i < players.length; i++) {
+                    const bot = players[i];
+                    let botBet = botBetStrategy(i);
+                    if (botBet > bot.chips) botBet = bot.chips;
+                    if (botBet < 5 && bot.chips >= 5) botBet = 5;
+                    bot.chips -= botBet;
+                    bot.bet = botBet;
+                    pot += botBet;
+                    allBets[i] = botBet;
+                    Sound.playChip();
+                }
+                log(`🐢 Cào rùa: bạn cược ${fmt(amount)}, bot đã cược. Tổng pot: ${fmt(pot)}`, 'gold');
+                setStatus(`Đã cược! Tổng pot ${fmt(pot)}. Chia bài nào!`);
+                gameState = 'BETTING';
+            } else if (gameMode === 'dealer') {
+                if (dealerIndex === -1) selectDealer(0);
+                const isHumanDealer = (dealerIndex === 0);
+
+                if (isHumanDealer) {
+                    human.bet = 0;
+                    allBets[0] = 0;
+                    log('🧑 Bạn là nhà cái, không cần đặt cược.', 'gold');
+                    setStatus('Bạn là cái, không cược. Bấm "Chia bài" để bắt đầu ván.');
+                } else {
+                    if (amount > human.chips) {
+                        log(`Bạn chỉ có ${fmt(human.chips)}, không đủ cược!`, 'alert');
+                        return;
+                    }
+                    human.chips -= amount;
+                    human.bet = amount;
+                    pot += amount;
+                    allBets[0] = amount;
+                    Sound.playChip();
+                    log(`Bạn đặt cược ${fmt(amount)}`, 'gold');
+                }
+
+                for (let i = 1; i < players.length; i++) {
+                    if (i === dealerIndex) continue;
+                    const bot = players[i];
+                    const botBet = botBetStrategy(i);
+                    if (botBet > bot.chips) continue;
+                    bot.chips -= botBet;
+                    bot.bet = botBet;
+                    pot += botBet;
+                    allBets[i] = botBet;
+                    Sound.playChip();
+                }
+                players[dealerIndex].bet = 0;
+                allBets[dealerIndex] = 0;
+
+                log(`🏦 Cào cái: ${isHumanDealer ? 'bạn là cái, không cược' : `bạn cược ${fmt(amount)}`}, bot đã cược. Tổng pot: ${fmt(pot)}`, 'gold');
+                setStatus(`Đã cược! Tổng pot ${fmt(pot)}. Chia bài nào!`);
+                gameState = 'BETTING';
+            }
+            updateUI();
+            document.getElementById('btn-bet').disabled = true;
+            document.getElementById('btn-deal').disabled = false;
+        }
+
+        // ============================================================
+        // 9. CHIA BÀI
+        // ============================================================
+        async function dealCards() {
+            if (gameState !== 'BETTING') {
+                log('Hãy đặt cược trước khi chia bài!', 'alert');
+                return;
+            }
+            if (deck.length < 12) createDeck();
+
+            gameState = 'DEALING';
+            document.getElementById('btn-deal').disabled = true;
+            setStatus('🃏 Đang chia bài...');
+            log('🃏 Đang chia bài...', 'gold');
+
+            const order = [0, 1, 2, 3];
+            let sourceIdx = (dealerIndex >= 0) ? dealerIndex : 0;
+            for (let round = 0; round < 3; round++) {
+                for (let i = 0; i < order.length; i++) {
+                    const pIdx = order[i];
+                    const card = deck.pop();
+                    players[pIdx].hand.push(card);
+                    await animateDealCard(`cards-${pIdx}`, sourceIdx);
+                    renderAllCards(false);
+                    await sleep(80);
+                }
+            }
+
+            myCardsRevealed = false;
+            isNanning = false;
+            nanningPhase = 0;
+            expectedRanks = [];
+            expectedType = 'none';
+            expectedName = '';
+            cardsFlippedManually = false;
+            playerCardElements = [];
+            renderAllCards(false);
+            updateUI();
+
+            log('✅ Chia bài xong! Bấm "Nặn bài" để bắt đầu nặn từng lá.', 'gold');
+            setStatus('👀 Bấm "Nặn bài" để lật từng lá, hoặc "Lật bài" để xem nhanh!');
+            document.getElementById('btn-peek').disabled = false;
+            document.getElementById('btn-flip-all').disabled = false;
+            document.getElementById('btn-showdown').disabled = true;
+        }
+
+        async function animateDealCard(targetElemId, fromIdx = 0) {
+            Sound.playCard();
+            const source = document.getElementById(`seat-${fromIdx}`);
+            const target = document.getElementById(targetElemId);
+            if (!source || !target) return;
+            const srcRect = source.getBoundingClientRect(),
+                tgtRect = target.getBoundingClientRect();
+            const srcX = srcRect.left + srcRect.width / 2,
+                srcY = srcRect.top + srcRect.height / 2;
+            const flyer = document.createElement('div');
+            flyer.className = 'flying-card';
+            flyer.style.left = `${srcX - 16}px`;
+            flyer.style.top = `${srcY - 22}px`;
+            document.body.appendChild(flyer);
+
+            await sleep(20);
+            const tgtX = tgtRect.left + tgtRect.width / 2,
+                tgtY = tgtRect.top + tgtRect.height / 2;
+            flyer.style.left = `${tgtX - 16}px`;
+            flyer.style.top = `${tgtY - 22}px`;
+            flyer.style.transform = 'scale(1.02) rotate(360deg)';
+            await sleep(280);
+            if (flyer.parentNode) flyer.parentNode.removeChild(flyer);
+        }
+
+        // ============================================================
+        // 10. NẶN BÀI
+        // ============================================================
+        async function nanCardStep() {
+            if (gameState !== 'DEALING' || isNanning) return;
+            if (players[0].hand.length !== 3) { log('Chưa có bài!', 'alert'); return; }
+            if (nanningPhase >= 3) { log('Đã nặn hết 3 lá! Bấm "Kết quả" để so điểm.', 'gold'); return; }
+            if (cardsFlippedManually) { log('Bạn đã lật toàn bộ bài bằng nút "Lật bài".', 'gold'); return; }
+
+            isNanning = true;
+            document.getElementById('btn-peek').disabled = true;
+            document.getElementById('btn-flip-all').disabled = true;
+            document.getElementById('btn-showdown').disabled = true;
+
+            const idx = nanningPhase;
+            const cardEl = playerCardElements[0] && playerCardElements[0][idx];
+            if (!cardEl) { isNanning = false;
+                updateUI(); return; }
+
+            cardEl.classList.add('nan-card');
+            await sleep(200);
+            cardEl.classList.add('flipped');
+            Sound.playCard();
+            nanningPhase = idx + 1;
+
+            if (nanningPhase === 1) {
+                showSpeech(0, 'Lá đầu...');
+                setStatus('Lá thứ 1 đã lật.');
+            } else if (nanningPhase === 2) {
+                const myHand = players[0].hand;
+                const firstTwo = myHand.slice(0, 2);
+                const potential = evaluatePotential(firstTwo);
+                if (potential.expectedRanks.length > 0 || potential.type === 'ba_cao') {
+                    expectedRanks = potential.expectedRanks;
+                    expectedType = potential.type;
+                    expectedName = potential.expectedName;
+                    chargeEffect.classList.add('active');
+                    Sound.playCharge();
+                    let msg = '';
+                    if (potential.type === 'ba_cao') {
+                        msg = '🔥 Cần lá Tây nữa là BA CÀO!';
+                        showSpeech(0, msg);
+                        log('🔥 Cần lá Tây nữa là BA CÀO!', 'special');
+                        setStatus('⚡ Tụ lực cho BA CÀO!');
+                    } else if (potential.type === 'nut9') {
+                        msg = `🔥 Cần lá ${potential.expectedName} nữa là 9 NÚT!`;
+                        showSpeech(0, msg);
+                        log(`🔥 Cần lá ${potential.expectedName} nữa là 9 NÚT!`, 'special');
+                        setStatus(`⚡ Tụ lực cho 9 NÚT!`);
+                    }
+                    document.getElementById('poker-table').classList.add('shake');
+                    setTimeout(() => document.getElementById('poker-table').classList.remove('shake'), 300);
+                } else {
+                    showSpeech(0, '😐 Bài không có gì đặc biệt.');
+                    setStatus('Không có tiềm năng đặc biệt.');
+                }
+                document.getElementById('btn-peek').disabled = false;
+                document.getElementById('btn-flip-all').disabled = false;
+            } else if (nanningPhase === 3) {
+                chargeEffect.classList.remove('active');
+                delete chargeEffect.dataset.charged;
+
+                const myHand = players[0].hand;
+                const score = calcScore(myHand);
+                const allCards = playerCardElements[0] || [];
+
+                let isHit = false;
+                let isBaCao = false;
+                if (score.isBaCao) {
+                    isBaCao = true;
+                    isHit = true;
+                } else if (expectedType === 'nut9' && score.score === 9) {
+                    isHit = true;
+                } else if (expectedType === 'ba_cao' && score.isBaCao) {
+                    isHit = true;
+                }
+
+                if (isBaCao || score.isBaCao) {
+                    Sound.playBaCao();
+                    setStatus('🎉 BA CÀO! BẤT BẠI!');
+                    log('🎉 BA CÀO! BẠN CÓ BA CÀO – THẮNG TUYỆT ĐỐI!', 'winner');
+                    showSpeech(0, '🎉 BA CÀO!');
+                    allCards.forEach(el => el.classList.add('glow-rainbow'));
+                    createFireworks(0);
+                    document.getElementById('poker-table').classList.add('shake');
+                    Sound.playShake();
+                    setTimeout(() => document.getElementById('poker-table').classList.remove('shake'), 400);
+                } else if (isHit && score.score === 9) {
+                    Sound.playWin();
+                    setStatus('🔥 9 NÚT! SIÊU ĐỈNH!');
+                    log('🔥 9 NÚT! BẠN CÓ 9 NÚT – CỰC KỲ MẠNH!', 'winner');
+                    showSpeech(0, '🔥 9 NÚT!');
+                    allCards.forEach(el => el.classList.add('glow-gold'));
+                    createFireworks(0);
+                } else if (score.score >= 8 && !isHit) {
+                    Sound.playHappy();
+                    setStatus(`✨ 8 NÚT! RẤT TỐT!`);
+                    log(`✨ Bạn có 8 nút! Mạnh!`, 'gold');
+                    showSpeech(0, '✨ 8 NÚT!');
+                    allCards.forEach(el => el.classList.add('glow-gold'));
+                    createFireworks(0);
+                } else if (score.score >= 6) {
+                    Sound.playCard();
+                    setStatus(`👍 ${score.score} NÚT. TẠM ĐƯỢC.`);
+                    log(`👍 Bạn có ${score.score} nút. Khá ổn.`, 'gold');
+                    showSpeech(0, `👍 ${score.score} NÚT`);
+                    allCards.forEach(el => el.classList.add('glow-blue'));
+                } else if (score.score >= 4) {
+                    Sound.playCard();
+                    setStatus(`😐 ${score.score} NÚT. CÓ THỂ CỐ.`);
+                    log(`😐 Bạn có ${score.score} nút. Trung bình.`);
+                    showSpeech(0, `😐 ${score.score} NÚT`);
+                    allCards.forEach(el => el.classList.add('glow-blue'));
+                } else {
+                    Sound.playAngry();
+                    setStatus(`😢 ${score.score} NÚT. XẤU QUÁ!`);
+                    log(`😢 Bạn có ${score.score} nút. Không may!`, 'alert');
+                    showSpeech(0, `😢 ${score.score} NÚT`);
+                    allCards.forEach(el => el.classList.add('glow-red'));
+                    document.getElementById('poker-table').classList.add('shake');
+                    setTimeout(() => document.getElementById('poker-table').classList.remove('shake'), 300);
+                }
+                myCardsRevealed = true;
+                isNanning = false;
+                document.getElementById('btn-peek').disabled = true;
+                document.getElementById('btn-flip-all').disabled = true;
+                document.getElementById('btn-showdown').disabled = false;
+                setStatus('✅ Đã xem bài. Bấm "Kết quả" để so điểm!');
+                updateUI();
+            }
+
+            if (nanningPhase < 3) {
+                document.getElementById('btn-peek').disabled = false;
+            } else {
+                document.getElementById('btn-peek').disabled = true;
+                document.getElementById('btn-showdown').disabled = false;
+            }
+            isNanning = false;
+            updateUI();
+        }
+
+        // ============================================================
+        // 11. LẬT BÀI NHANH
+        // ============================================================
+        async function flipAllCards() {
+            if (gameState !== 'DEALING' || isNanning) return;
+            if (nanningPhase >= 3 && !cardsFlippedManually) { log('Bạn đã nặn hết 3 lá rồi!', 'gold'); return; }
+            if (cardsFlippedManually) { log('Bài đã được lật rồi!', 'gold'); return; }
+
+            cardsFlippedManually = true;
+            document.getElementById('btn-flip-all').disabled = true;
+            document.getElementById('btn-peek').disabled = true;
+
+            const allCards = playerCardElements[0] || [];
+            const startIdx = nanningPhase;
+            for (let i = startIdx; i < 3; i++) {
+                const el = allCards[i];
+                if (!el) continue;
+                el.classList.add('nan-card');
+                await sleep(150);
+                el.classList.add('flipped');
+                Sound.playCard();
+            }
+            nanningPhase = 3;
+            myCardsRevealed = true;
+
+            const myHand = players[0].hand;
+            const score = calcScore(myHand);
+            let msg = '',
+                glow = '';
+            if (score.isBaCao) {
+                msg = '🎉 BA CÀO!';
+                glow = 'glow-rainbow';
+                Sound.playBaCao();
+                createFireworks(0);
+            } else if (score.score >= 9) {
+                msg = '🔥 9 NÚT!';
+                glow = 'glow-gold';
+                Sound.playWin();
+                createFireworks(0);
+            } else if (score.score >= 8) {
+                msg = '✨ 8 NÚT!';
+                glow = 'glow-gold';
+                Sound.playHappy();
+                createFireworks(0);
+            } else if (score.score >= 6) {
+                msg = `👍 ${score.score} NÚT`;
+                glow = 'glow-blue';
+                Sound.playCard();
+            } else if (score.score >= 4) {
+                msg = `😐 ${score.score} NÚT`;
+                glow = 'glow-blue';
+                Sound.playCard();
+            } else {
+                msg = `😢 ${score.score} NÚT`;
+                glow = 'glow-red';
+                Sound.playAngry();
+            }
+            allCards.forEach(el => el.classList.add(glow));
+            showSpeech(0, msg);
+            setStatus(`📋 Đã lật hết bài: ${msg}`);
+            log(`📋 Lật nhanh: ${msg}`, 'gold');
+
+            document.getElementById('btn-showdown').disabled = false;
+            updateUI();
+        }
+
+        // ============================================================
+        // 12. KẾT QUẢ (HIỂN THỊ LÝ DO THẮNG)
+        // ============================================================
+        function showdown() {
+            if (gameState !== 'DEALING') { log('Chưa thể kết thúc ván!', 'alert'); return; }
+            if (isNanning) return;
+            if (nanningPhase < 3 && !cardsFlippedManually) {
+                log('Bạn cần nặn hết 3 lá hoặc bấm "Lật bài" trước khi xem kết quả!', 'alert');
+                return;
+            }
+
+            gameState = 'SHOWDOWN';
+            document.getElementById('btn-showdown').disabled = true;
+            document.getElementById('btn-peek').disabled = true;
+            document.getElementById('btn-flip-all').disabled = true;
+            setStatus('🏆 Công bố kết quả...');
+
+            myCardsRevealed = true;
+            renderAllCards(true);
+
+            let results = players.map((p, idx) => {
+                const score = calcScore(p.hand);
+                return { index: idx, player: p, score: score };
+            });
+
+            let winners = [];
+            if (gameMode === 'turtle') {
+                let maxScore = -1,
+                    maxIsBaCao = false;
+                results.forEach(r => {
+                    if (r.score.isBaCao && !maxIsBaCao) { maxIsBaCao = true;
+                        maxScore = 10; } else if (r.score.isBaCao && maxIsBaCao) {} else if (!r.score.isBaCao && !maxIsBaCao) {
+                        if (r.score.score > maxScore) maxScore = r.score.score; }
+                });
+                winners = results.filter(r => {
+                    if (maxIsBaCao) return r.score.isBaCao;
+                    else return !r.score.isBaCao && r.score.score === maxScore;
+                });
+
+                if (winners.length > 0) {
+                    const share = Math.floor(pot / winners.length);
+                    let remainder = pot - share * winners.length;
+                    winners.forEach((w, idx) => {
+                        let add = share;
+                        if (idx === 0) add += remainder;
+                        w.player.chips += add;
+                        // Lấy tên bài để hiển thị
+                        const handName = w.score.isBaCao ? 'BA CÀO' : `${w.score.score} NÚT`;
+                        log(`🏆 ${w.player.name} THẮNG ${fmt(add)} với [${handName}]!`, 'winner');
+                        document.getElementById(`seat-${w.index}`).classList.add('winner');
+                        Sound.playWin();
+                        createFireworks(w.index);
+                    });
+                    if (winners.length > 1) log(`🤝 Hòa giữa ${winners.map(w => w.player.name).join(', ')}`, 'gold');
+                    pot = 0;
+                } else { log('Không có người thắng (lỗi).', 'alert'); }
+            } else if (gameMode === 'dealer') {
+                const dealer = players[dealerIndex];
+                let dealerTotalChips = dealer.chips;
+                let hasWinner = false,
+                    hasDraw = false;
+
+                for (let i = 0; i < players.length; i++) {
+                    if (i === dealerIndex) continue;
+                    const p = players[i];
+                    const comp = compareHands(p.hand, dealer.hand);
+                    if (comp === 1) {
+                        hasWinner = true;
+                        const bet = p.bet;
+                        const profit = bet;
+                        if (pot >= bet) { pot -= bet;
+                            p.chips += bet; } else {
+                            const takeFromDealer = Math.min(bet, dealerTotalChips);
+                            p.chips += takeFromDealer;
+                            dealerTotalChips -= takeFromDealer;
+                        }
+                        if (dealerTotalChips >= profit) {
+                            dealerTotalChips -= profit;
+                            p.chips += profit;
+                            const handName = calcScore(p.hand).isBaCao ? 'BA CÀO' : `${calcScore(p.hand).score} NÚT`;
+                            log(`💰 ${p.name} thắng cái, nhận ${fmt(profit)} lời với [${handName}]!`, 'winner');
+                        } else {
+                            const allDealer = dealerTotalChips;
+                            p.chips += allDealer;
+                            dealerTotalChips = 0;
+                            log(`⚠️ Cái hết tiền! ${p.name} nhận ${fmt(allDealer)} lời`, 'alert');
+                        }
+                        document.getElementById(`seat-${i}`).classList.add('winner');
+                        Sound.playWin();
+                        createFireworks(i);
+                    } else if (comp === -1) {
+                        log(`❌ ${p.name} thua cái, mất ${fmt(p.bet)}`, 'alert');
+                    } else {
+                        hasDraw = true;
+                        const refund = p.bet;
+                        if (pot >= refund) { pot -= refund;
+                            p.chips += refund;
+                            log(`↩️ ${p.name} hòa cái, nhận lại ${fmt(refund)}`, 'gold'); } else {
+                            const takeFromDealer = Math.min(refund, dealerTotalChips);
+                            p.chips += takeFromDealer;
+                            dealerTotalChips -= takeFromDealer;
+                            log(`↩️ ${p.name} hòa cái, nhận lại ${fmt(takeFromDealer)} (thiếu)`, 'gold');
+                        }
+                    }
+                }
+
+                dealer.chips = dealerTotalChips + pot;
+                if (pot > 0) log(`🏦 Nhà cái nhận pot ${fmt(pot)}`, 'gold');
+                if (!hasWinner && !hasDraw) {
+                    document.getElementById(`seat-${dealerIndex}`).classList.add('winner');
+                    const handName = calcScore(dealer.hand).isBaCao ? 'BA CÀO' : `${calcScore(dealer.hand).score} NÚT`;
+                    log(`🏦 Nhà cái thắng tất cả với [${handName}]!`, 'winner');
+                    Sound.playWin();
+                    createFireworks(dealerIndex);
+                }
+                pot = 0;
+            }
+
+            players.forEach(p => p.hand = []);
+            gameState = 'SHOWDOWN';
+            updateUI();
+            document.getElementById('btn-next').style.display = 'block';
+            setStatus('🏁 Ván kết thúc! Bấm "Ván tiếp" để chơi tiếp.');
+            document.getElementById('poker-table').classList.add('shake');
+            Sound.playShake();
+            setTimeout(() => document.getElementById('poker-table').classList.remove('shake'), 400);
+        }
+
+        // ============================================================
+        // 13. VÁN TIẾP
+        // ============================================================
+        function resetForNextRound() {
+            // Giữ nguyên giá trị cược (không reset về 10)
+            // chỉ reset các trạng thái game
+            players.forEach((p, idx) => {
+                if (!p.isHuman && p.chips <= 0) {
+                    if (benchPool.length > 0) {
+                        const newCeleb = benchPool.shift();
+                        benchPool.push({ name: p.name, style: p.style });
+                        p.name = newCeleb.name;
+                        p.style = newCeleb.style;
+                        p.chips = getRandomBotStack();
+                        document.getElementById(`name-${idx}`).innerText = p.name;
+                        log(`✨ ${newCeleb.name} tham gia bàn với ${fmt(p.chips)}!`, 'gold');
+                    } else { p.chips = getRandomBotStack(); }
+                }
+            });
+            if (players[0].chips <= 0) {
+                players[0].chips = REVIVE_CHIPS;
+                log(`💰 Bạn đã hết tiền! Được cấp lại ${fmt(REVIVE_CHIPS)} để gỡ gạc.`, 'gold');
+            }
+            resetRound();
+            // Không reset giá trị input
+            document.getElementById('btn-bet').disabled = false;
+            document.getElementById('btn-deal').disabled = true;
+            document.getElementById('btn-peek').disabled = true;
+            document.getElementById('btn-flip-all').disabled = true;
+            document.getElementById('btn-showdown').disabled = true;
+            document.getElementById('btn-next').style.display = 'none';
+            myCardsRevealed = false;
+            isNanning = false;
+            nanningPhase = 0;
+            expectedRanks = [];
+            expectedType = 'none';
+            expectedName = '';
+            cardsFlippedManually = false;
+            playerCardElements = [];
+            chargeEffect.classList.remove('active');
+            delete chargeEffect.dataset.charged;
+            if (gameMode === 'dealer' && dealerIndex === -1) selectDealer(0);
+            updateUI();
+            setStatus('🔄 Ván mới! Đặt cược và chia bài.');
+            log('🔄 Ván mới sẵn sàng!', 'gold');
+        }
+
+        // ============================================================
+        // 14. CHỌN MODE & CHỌN CÁI
+        // ============================================================
+        function setGameMode(mode) {
+            if (gameState !== 'IDLE' && gameState !== 'SHOWDOWN') {
+                log('Đang trong ván, không thể đổi mode!', 'alert');
+                return;
+            }
+            gameMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            if (mode === 'turtle') {
+                document.getElementById('mode-turtle').classList.add('active');
+                dealerIndex = -1;
+                document.getElementById('dealer-select-human').classList.remove('active-dealer');
+                document.getElementById('dealer-select-bot').classList.remove('active-dealer');
+                log('🐢 Chế độ Cào Rùa: nhất ăn tất, cược linh hoạt.', 'gold');
+                setStatus('🐢 Cào Rùa – mỗi người cược khác nhau.');
+            } else {
+                document.getElementById('mode-dealer').classList.add('active');
+                selectDealer(0);
+                log('🏦 Chế độ Cào Cái.', 'gold');
+                setStatus('🏦 Cào Cái – chọn cái và đặt cược.');
+            }
+            resetRound();
+            updateUI();
+        }
+
+        function selectDealer(choice) {
+            if (gameMode !== 'dealer') { log('Chỉ áp dụng cho Cào Cái!', 'alert'); return; }
+            if (gameState !== 'IDLE' && gameState !== 'SHOWDOWN') {
+                log('Không thể đổi cái giữa ván!', 'alert');
+                return;
+            }
+            if (choice === 0) {
+                dealerIndex = 0;
+                document.getElementById('dealer-select-human').classList.add('active-dealer');
+                document.getElementById('dealer-select-bot').classList.remove('active-dealer');
+                log('🧑 Bạn là nhà cái.', 'gold');
+                setStatus('🧑 Bạn là cái. Đặt cược và chia bài.');
+            } else {
+                const botIndices = [1, 2, 3];
+                dealerIndex = botIndices[Math.floor(Math.random() * botIndices.length)];
+                document.getElementById('dealer-select-bot').classList.add('active-dealer');
+                document.getElementById('dealer-select-human').classList.remove('active-dealer');
+                log(`🤖 Nhà cái là ${players[dealerIndex].name}.`, 'gold');
+                setStatus(`🤖 Cái: ${players[dealerIndex].name}. Đặt cược đi!`);
+            }
+            updateUI();
+        }
+
+        // ============================================================
+        // 15. FIREWORKS
+        // ============================================================
+        function createFireworks(seatId) {
+            const seat = document.getElementById(`seat-${seatId}`);
+            if (!seat) return;
+            const rect = seat.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2,
+                cy = rect.top + rect.height / 2;
+            const colors = ['#fbbf24', '#f59e0b', '#ef4444', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899', '#f472b6'];
+            for (let i = 0; i < 18; i++) {
+                const el = document.createElement('div');
+                el.className = 'firework';
+                const angle = Math.random() * Math.PI * 2,
+                    dist = 30 + Math.random() * 60;
+                const tx = Math.cos(angle) * dist,
+                    ty = Math.sin(angle) * dist;
+                el.style.setProperty('--tx', tx + 'px');
+                el.style.setProperty('--ty', ty + 'px');
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.left = cx + 'px';
+                el.style.top = cy + 'px';
+                el.style.width = (4 + Math.random() * 8) + 'px';
+                el.style.height = el.style.width;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1000);
+            }
+        }
+
+        // ============================================================
+        // 16. KHỞI TẠO
+        // ============================================================
+        function init() {
+            createDeck();
+            initPlayers();
+            resetRound();
+            gameMode = 'turtle';
+            document.getElementById('mode-turtle').classList.add('active');
+            dealerIndex = -1;
+            log('🃏 Chào mừng đến với Bài Cào Rix Pro!', 'gold');
+            log('🐢 Cào Rùa: nhất ăn tất, cược linh hoạt. 🏦 Cào Cái: so với cái.', 'gold');
+            log('👀 Bấm "Nặn bài" để lật từng lá!', 'special');
+            setStatus('🎯 Chọn mode, đặt cược và chia bài!');
+            updateUI();
+        }
+        init();
+    </script>
+</body>
+</html>
