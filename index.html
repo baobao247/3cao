@@ -21,29 +21,19 @@ body{
   display:flex;flex-direction:column;align-items:center;justify-content:space-between;
   min-height:100vh;padding:6px 4px;overflow-x:hidden;
 }
-/* ========== TOP TOOLBAR ========== */
-.top-toolbar{
-  width:100%;max-width:480px;
-  display:flex;justify-content:space-between;align-items:center;
-  gap:6px;padding:4px 6px;margin-bottom:2px;
-}
+/* TOP TOOLBAR */
+.top-toolbar{width:100%;max-width:480px;display:flex;justify-content:space-between;align-items:center;gap:6px;padding:4px 6px;margin-bottom:2px}
 .toolbar-left,.toolbar-right{display:flex;gap:6px;align-items:center}
 .toolbar-btn{
-  width:34px;height:34px;border-radius:10px;
-  border:1.5px solid var(--border);background:var(--surface);
-  color:var(--text-muted);cursor:pointer;
-  display:grid;place-items:center;font-size:14px;
-  transition:all .2s ease;
+  width:34px;height:34px;border-radius:10px;border:1.5px solid var(--border);
+  background:var(--surface);color:var(--text-muted);cursor:pointer;
+  display:grid;place-items:center;font-size:14px;transition:all .2s ease;
 }
 .toolbar-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
 .toolbar-btn.active{border-color:var(--gold);color:var(--gold);background:#1e293b}
 .toolbar-btn.muted{opacity:.4}
-.badge-dot{
-  position:absolute;top:-3px;right:-3px;
-  width:8px;height:8px;border-radius:50%;
-  background:#4ade80;border:1.5px solid var(--bg-dark);
-}
-/* ========== HEADER ========== */
+.badge-dot{position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:50%;background:#4ade80;border:1.5px solid var(--bg-dark)}
+/* HEADER */
 .casino-header{text-align:center;margin-top:2px;margin-bottom:2px}
 .casino-title{
   font-size:clamp(1.1rem,4.5vw,1.6rem);
@@ -53,12 +43,11 @@ body{
   filter:drop-shadow(0 0 12px rgba(245,158,11,.3));
 }
 .sub-title{font-size:.6rem;color:#94a3b8;margin-top:-2px}
-/* ========== TABLE ========== */
+/* TABLE */
 .table-container{position:relative;width:100%;max-width:480px;margin:8px 0 6px 0}
 .poker-table{
   position:relative;width:100%;height:clamp(410px,62vh,530px);
-  background:var(--table-felt);
-  border:12px solid #2d120d;border-radius:200px;
+  background:var(--table-felt);border:12px solid #2d120d;border-radius:200px;
   box-shadow:0 0 0 2px var(--gold),inset 0 0 90px rgba(0,0,0,.95),0 12px 30px rgba(0,0,0,.9);
   overflow:visible;transition:transform .1s ease;
   animation:tableGlow 3s ease-in-out infinite alternate;
@@ -68,24 +57,13 @@ body{
   100%{box-shadow:0 0 0 4px #fcd34d,inset 0 0 100px rgba(0,0,0,.95),0 12px 35px rgba(251,191,36,.2)}
 }
 .poker-table.shake{animation:shake .3s ease-in-out}
-@keyframes shake{
-  0%{transform:rotate(0deg)}
-  25%{transform:rotate(1.5deg)}
-  75%{transform:rotate(-1.5deg)}
-  100%{transform:rotate(0deg)}
-}
-.table-center{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  z-index:2;width:100%;max-width:220px;
-}
+@keyframes shake{0%{transform:rotate(0deg)}25%{transform:rotate(1.5deg)}75%{transform:rotate(-1.5deg)}100%{transform:rotate(0deg)}}
+.table-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2;width:100%;max-width:220px}
 .pot-box{
   background:rgba(15,23,42,.95);border:1.5px solid var(--gold);
   padding:4px 14px;border-radius:20px;color:var(--gold);
   font-weight:900;font-size:clamp(.8rem,3vw,1rem);
-  box-shadow:0 0 14px rgba(251,191,36,.4);
-  text-align:center;line-height:1.3;
-  transition:transform .2s ease;
+  box-shadow:0 0 14px rgba(251,191,36,.4);text-align:center;line-height:1.3;transition:transform .2s ease;
 }
 .pot-box.bump{animation:potBump .35s cubic-bezier(.34,1.56,.64,1)}
 @keyframes potBump{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
@@ -102,10 +80,7 @@ body{
   text-align:center;width:100%;box-shadow:0 4px 10px rgba(0,0,0,.8);
   backdrop-filter:blur(4px);transition:all .25s ease;
 }
-.seat.winner .avatar-box{
-  border-color:#4ade80;box-shadow:0 0 22px #4ade80;
-  animation:pulse-win .8s infinite alternate;
-}
+.seat.winner .avatar-box{border-color:#4ade80;box-shadow:0 0 22px #4ade80;animation:pulse-win .8s infinite alternate}
 .seat.dealer .avatar-box{border-color:#f59e0b;box-shadow:0 0 14px rgba(245,158,11,.5)}
 .seat.thinking .avatar-box{border-color:#8b5cf6;box-shadow:0 0 14px rgba(139,92,246,.5)}
 @keyframes pulse-win{0%{transform:scale(1)}100%{transform:scale(1.08)}}
@@ -122,22 +97,13 @@ body{
 }
 .speech-bubble.show{opacity:1;transform:translateY(0)}
 .seat-top .speech-bubble{top:2px;left:102%;transform:translateX(0)}
-/* thinking dots */
-.thinking-dots{
-  position:absolute;top:-16px;right:4px;
-  display:flex;gap:2px;padding:3px 6px;
-  background:var(--surface);border:1px solid #8b5cf6;border-radius:10px;
-  opacity:0;transition:opacity .2s ease;pointer-events:none;
-}
+.thinking-dots{position:absolute;top:-16px;right:4px;display:flex;gap:2px;padding:3px 6px;background:var(--surface);border:1px solid #8b5cf6;border-radius:10px;opacity:0;transition:opacity .2s ease;pointer-events:none}
 .seat.thinking .thinking-dots{opacity:1}
-.thinking-dots span{
-  width:5px;height:5px;border-radius:50%;
-  background:#8b5cf6;animation:dotBounce .9s ease-in-out infinite;
-}
+.thinking-dots span{width:5px;height:5px;border-radius:50%;background:#8b5cf6;animation:dotBounce .9s ease-in-out infinite}
 .thinking-dots span:nth-child(2){animation-delay:.15s}
 .thinking-dots span:nth-child(3){animation-delay:.3s}
 @keyframes dotBounce{0%,80%,100%{transform:scale(.6);opacity:.5}40%{transform:scale(1);opacity:1}}
-/* ========== CARDS ========== */
+/* CARDS */
 .cards-row{display:flex;gap:3px;margin:2px 0;min-height:var(--card-h);justify-content:center}
 .card-container{perspective:1000px;width:var(--card-w);height:var(--card-h)}
 .card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
@@ -159,64 +125,33 @@ body{
 .card-container.glow-gold .card-front{box-shadow:0 0 20px var(--gold),0 0 40px rgba(251,191,36,.4);border-color:var(--gold)}
 .card-container.glow-blue .card-front{box-shadow:0 0 20px #3b82f6,0 0 40px rgba(59,130,246,.3);border-color:#3b82f6}
 .card-container.glow-red .card-front{box-shadow:0 0 20px #ef4444,0 0 40px rgba(239,68,68,.3);border-color:#ef4444}
-.card-container.glow-rainbow .card-front{
-  box-shadow:0 0 30px #fbbf24,0 0 60px #f59e0b,0 0 90px #ef4444;
-  border-color:#fbbf24;animation:glowRainbow .6s ease-in-out infinite alternate;
-}
-@keyframes glowRainbow{
-  0%{box-shadow:0 0 20px #fbbf24,0 0 40px #f59e0b}
-  100%{box-shadow:0 0 40px #fbbf24,0 0 80px #f59e0b,0 0 120px #ef4444}
-}
-/* ========== CHARGE EFFECT ========== */
+.card-container.glow-rainbow .card-front{box-shadow:0 0 30px #fbbf24,0 0 60px #f59e0b,0 0 90px #ef4444;border-color:#fbbf24;animation:glowRainbow .6s ease-in-out infinite alternate}
+@keyframes glowRainbow{0%{box-shadow:0 0 20px #fbbf24,0 0 40px #f59e0b}100%{box-shadow:0 0 40px #fbbf24,0 0 80px #f59e0b,0 0 120px #ef4444}}
+/* CHARGE */
 .charge-effect{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;pointer-events:none;opacity:0;transition:opacity .3s}
 .charge-effect.active{opacity:1;animation:chargePulse .8s ease-in-out infinite alternate}
 @keyframes chargePulse{0%{transform:translate(-50%,-50%) scale(.8);opacity:.4}100%{transform:translate(-50%,-50%) scale(1.3);opacity:1}}
-.charge-ring{
-  width:100px;height:100px;border-radius:50%;border:5px solid var(--gold);
-  box-shadow:0 0 40px var(--gold),inset 0 0 40px rgba(251,191,36,.3);
-  background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 70%);position:relative;
-}
+.charge-ring{width:100px;height:100px;border-radius:50%;border:5px solid var(--gold);box-shadow:0 0 40px var(--gold),inset 0 0 40px rgba(251,191,36,.3);background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 70%);position:relative}
 .charge-ring::after{content:'';position:absolute;top:-10px;left:-10px;right:-10px;bottom:-10px;border-radius:50%;border:3px dashed rgba(251,191,36,.3);animation:spin 3s linear infinite}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 .charge-bolt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;color:var(--gold);text-shadow:0 0 40px var(--gold);animation:boltFade .5s ease-in-out infinite alternate;opacity:.6}
 @keyframes boltFade{0%{opacity:.4;transform:translate(-50%,-50%) scale(.9)}100%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}}
-.charge-text{
-  position:absolute;top:calc(50% + 55px);left:50%;transform:translateX(-50%);
-  color:var(--gold);font-weight:900;font-size:.9rem;
-  text-shadow:0 0 30px var(--gold),0 0 60px #f59e0b;white-space:nowrap;
-  animation:textGlow .5s ease-in-out infinite alternate;letter-spacing:2px;
-}
+.charge-text{position:absolute;top:calc(50% + 55px);left:50%;transform:translateX(-50%);color:var(--gold);font-weight:900;font-size:.9rem;text-shadow:0 0 30px var(--gold),0 0 60px #f59e0b;white-space:nowrap;animation:textGlow .5s ease-in-out infinite alternate;letter-spacing:2px}
 @keyframes textGlow{0%{opacity:.5;text-shadow:0 0 15px var(--gold)}100%{opacity:1;text-shadow:0 0 40px var(--gold),0 0 80px #f59e0b}}
-/* ========== FLYING CHIP & CARD ========== */
-.flying-card{
-  position:fixed;width:var(--card-w);height:var(--card-h);
-  background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);
-  border:1px solid var(--gold);border-radius:4px;z-index:999;pointer-events:none;
-  transition:all .3s cubic-bezier(.25,.8,.25,1);box-shadow:0 6px 15px rgba(0,0,0,.7);
-}
-.flying-chip{
-  position:fixed;width:22px;height:22px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#fde68a,#f59e0b 40%,#92400e 100%);
-  border:2px solid #fcd34d;z-index:999;pointer-events:none;
-  box-shadow:0 4px 10px rgba(0,0,0,.6),inset 0 0 8px rgba(255,255,255,.3);
-  transition:all .5s cubic-bezier(.4,0,.2,1);
-  display:grid;place-items:center;font-size:8px;font-weight:900;color:#78350f;
-}
-/* ========== CONTROLS ========== */
+/* FLYING */
+.flying-card{position:fixed;width:var(--card-w);height:var(--card-h);background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);border:1px solid var(--gold);border-radius:4px;z-index:999;pointer-events:none;transition:all .3s cubic-bezier(.25,.8,.25,1);box-shadow:0 6px 15px rgba(0,0,0,.7)}
+.flying-chip{position:fixed;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fde68a,#f59e0b 40%,#92400e 100%);border:2px solid #fcd34d;z-index:999;pointer-events:none;box-shadow:0 4px 10px rgba(0,0,0,.6),inset 0 0 8px rgba(255,255,255,.3);transition:all .5s cubic-bezier(.4,0,.2,1);display:grid;place-items:center;font-size:8px;font-weight:900;color:#78350f}
+/* CONFETTI */
+.confetti{position:fixed;width:10px;height:14px;z-index:9999;pointer-events:none;top:-20px;animation:confettiFall linear forwards;will-change:transform,opacity;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(110vh) rotate(720deg) scale(.6);opacity:0}}
+/* CONTROLS */
 .controls-area{width:100%;max-width:480px;display:flex;flex-direction:column;gap:6px;align-items:center;margin-top:4px}
 .mode-selector{display:flex;gap:6px;width:100%;justify-content:center;flex-wrap:wrap}
-.mode-btn{
-  padding:6px 12px;border-radius:8px;border:2px solid #475569;
-  background:#0f172a;color:#94a3b8;font-weight:700;font-size:.72rem;
-  cursor:pointer;transition:all .2s;
-}
+.mode-btn{padding:6px 12px;border-radius:8px;border:2px solid #475569;background:#0f172a;color:#94a3b8;font-weight:700;font-size:.72rem;cursor:pointer;transition:all .2s}
 .mode-btn.active{border-color:var(--gold);color:var(--gold);background:#1e293b;box-shadow:0 0 12px rgba(251,191,36,.2)}
 .mode-btn:disabled{opacity:.35;cursor:not-allowed}
 .action-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%}
-.btn{
-  padding:10px 0;border:none;border-radius:8px;font-weight:800;font-size:.75rem;
-  cursor:pointer;transition:all .15s ease;box-shadow:0 3px 8px rgba(0,0,0,.5);text-align:center;
-}
+.btn{padding:10px 0;border:none;border-radius:8px;font-weight:800;font-size:.75rem;cursor:pointer;transition:all .15s ease;box-shadow:0 3px 8px rgba(0,0,0,.5);text-align:center}
 .btn:active{transform:scale(.96)}
 .btn:disabled{opacity:.35;cursor:not-allowed;filter:grayscale(1)}
 .btn-primary{background:#3b82f6;color:#fff}
@@ -228,35 +163,18 @@ body{
 .btn-dealer-select{background:#1e293b;color:#94a3b8;border:1px solid #475569}
 .btn-dealer-select.active-dealer{border-color:var(--gold);color:var(--gold);background:#0f172a}
 .btn-flip-all{background:#6366f1;color:#fff}
-/* ========== BET ========== */
+/* BET */
 .bet-group{display:flex;gap:6px;width:100%;align-items:center;justify-content:center;flex-wrap:wrap}
-.bet-group input[type="number"]{
-  width:80px;height:36px;border-radius:8px;border:1px solid var(--gold);
-  font-weight:bold;text-align:center;background:#0f172a;color:var(--gold);font-size:.85rem;
-}
-.bet-group .btn-step{
-  background:#1e293b;color:var(--gold);border:1px solid rgba(255,255,255,.15);
-  width:36px;height:36px;font-size:.85rem;font-weight:800;border-radius:8px;cursor:pointer;
-}
+.bet-group input[type="number"]{width:80px;height:36px;border-radius:8px;border:1px solid var(--gold);font-weight:bold;text-align:center;background:#0f172a;color:var(--gold);font-size:.85rem}
+.bet-group .btn-step{background:#1e293b;color:var(--gold);border:1px solid rgba(255,255,255,.15);width:36px;height:36px;font-size:.85rem;font-weight:800;border-radius:8px;cursor:pointer}
 .bet-presets{display:flex;gap:5px;width:100%;justify-content:center;flex-wrap:wrap;margin-top:2px}
-.preset-btn{
-  padding:5px 11px;border-radius:8px;border:1.5px solid #334155;
-  background:#0f172a;color:#94a3b8;font-weight:700;font-size:.68rem;
-  cursor:pointer;transition:all .15s;
-}
+.preset-btn{padding:5px 11px;border-radius:8px;border:1.5px solid #334155;background:#0f172a;color:#94a3b8;font-weight:700;font-size:.68rem;cursor:pointer;transition:all .15s}
 .preset-btn:hover{border-color:var(--gold);color:var(--gold);background:#1e293b}
 .preset-btn.allin{border-color:#ef4444;color:#fca5a5}
 .preset-btn.allin:hover{border-color:#ef4444;color:#fff;background:#7f1d1d}
-/* ========== STATUS & LOG ========== */
-.status-bar{
-  width:100%;text-align:center;font-size:.75rem;color:#94a3b8;
-  padding:4px 0;min-height:22px;border-bottom:1px solid #1e293b;
-}
-.log-box{
-  width:100%;max-width:480px;height:75px;background:rgba(7,10,18,.95);
-  margin-top:4px;border-radius:8px;padding:6px 10px;overflow-y:auto;
-  font-size:.72rem;border:1px solid #1e293b;display:flex;flex-direction:column-reverse;
-}
+/* STATUS & LOG */
+.status-bar{width:100%;text-align:center;font-size:.75rem;color:#94a3b8;padding:4px 0;min-height:22px;border-bottom:1px solid #1e293b}
+.log-box{width:100%;max-width:480px;height:75px;background:rgba(7,10,18,.95);margin-top:4px;border-radius:8px;padding:6px 10px;overflow-y:auto;font-size:.72rem;border:1px solid #1e293b;display:flex;flex-direction:column-reverse}
 .log-box::-webkit-scrollbar{width:4px}
 .log-box::-webkit-scrollbar-thumb{background:#334155;border-radius:2px}
 .log-line{margin-bottom:2px;color:#94a3b8}
@@ -265,64 +183,33 @@ body{
 .log-line.winner{color:#4ade80;font-weight:bold}
 .log-line.special{color:#f472b6;font-weight:bold}
 .log-line.achievement{color:#c084fc;font-weight:bold;text-shadow:0 0 8px rgba(192,132,252,.4)}
-/* ========== MODAL ========== */
-.modal-backdrop{
-  position:fixed;inset:0;background:rgba(2,6,23,.85);
-  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  z-index:2000;display:grid;place-items:center;padding:16px;
-  opacity:0;visibility:hidden;transition:all .25s ease;
-}
+/* MODAL */
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:2000;display:grid;place-items:center;padding:16px;opacity:0;visibility:hidden;transition:all .25s ease}
 .modal-backdrop.open{opacity:1;visibility:visible}
-.modal-content{
-  background:linear-gradient(180deg,#0f172a 0%,#020617 100%);
-  border:1.5px solid var(--gold);border-radius:18px;
-  padding:20px;width:100%;max-width:440px;
-  max-height:85vh;overflow-y:auto;
-  box-shadow:0 20px 60px rgba(0,0,0,.9),0 0 40px rgba(251,191,36,.15);
-  transform:scale(.95);transition:transform .25s cubic-bezier(.34,1.56,.64,1);
-}
+.modal-content{background:linear-gradient(180deg,#0f172a 0%,#020617 100%);border:1.5px solid var(--gold);border-radius:18px;padding:20px;width:100%;max-width:440px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.9),0 0 40px rgba(251,191,36,.15);transform:scale(.95);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
 .modal-backdrop.open .modal-content{transform:scale(1)}
 .modal-content::-webkit-scrollbar{width:6px}
 .modal-content::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #1e293b}
 .modal-head h3{font-size:1.05rem;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:8px}
-.modal-close{
-  width:32px;height:32px;border-radius:8px;border:none;
-  background:#1e293b;color:#94a3b8;cursor:pointer;
-  display:grid;place-items:center;font-size:14px;transition:all .2s;
-}
+.modal-close{width:32px;height:32px;border-radius:8px;border:none;background:#1e293b;color:#94a3b8;cursor:pointer;display:grid;place-items:center;font-size:14px;transition:all .2s}
 .modal-close:hover{background:#ef4444;color:#fff}
 .modal-section{margin-bottom:16px}
-.modal-section h4{
-  font-size:.78rem;font-weight:800;color:var(--gold);
-  text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;
-  display:flex;align-items:center;gap:6px;
-}
+.modal-section h4{font-size:.78rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .modal-section p,.modal-section li{font-size:.82rem;color:#cbd5e1;line-height:1.6}
 .modal-section ul{padding-left:20px}
 .modal-section li{margin-bottom:4px}
-.modal-section code{
-  background:#1e293b;padding:1px 6px;border-radius:4px;
-  font-family:'Courier New',monospace;font-size:.75rem;color:var(--gold);
-}
-/* ========== STATS ========== */
+.modal-section code{background:#1e293b;padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:.75rem;color:var(--gold)}
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
-.stat-card{
-  background:linear-gradient(135deg,#1e293b,#0f172a);
-  border:1px solid #334155;border-radius:12px;padding:12px;
-  text-align:center;
-}
+.stat-card{background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #334155;border-radius:12px;padding:12px;text-align:center}
 .stat-card .v{font-size:1.4rem;font-weight:900;color:var(--gold);font-family:'Courier New',monospace;line-height:1}
 .stat-card .l{font-size:.65rem;font-weight:700;color:#94a3b8;text-transform:uppercase;margin-top:6px;letter-spacing:.04em}
 .stat-card.win .v{color:#4ade80}
 .stat-card.loss .v{color:#f87171}
 .stat-card.draw .v{color:#fbbf24}
 .history-list-mini{display:flex;flex-direction:column;gap:4px;max-height:180px;overflow-y:auto;margin-bottom:12px}
-.history-item-mini{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:6px 10px;border-radius:8px;background:#0a0f1e;border:1px solid #1e293b;
-  font-size:.75rem;
-}
+.history-item-mini{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-radius:8px;background:#0a0f1e;border:1px solid #1e293b;font-size:.75rem}
 .history-item-mini.win{border-left:3px solid #4ade80}
 .history-item-mini.loss{border-left:3px solid #f87171}
 .history-item-mini.draw{border-left:3px solid #fbbf24}
@@ -330,40 +217,31 @@ body{
 .history-item-mini.win .result{color:#4ade80}
 .history-item-mini.loss .result{color:#f87171}
 .history-item-mini.draw .result{color:#fbbf24}
-/* ========== ACHIEVEMENTS ========== */
+/* LEADERBOARD */
+.leaderboard{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.lb-item{display:flex;align-items:center;gap:10px;padding:7px 12px;background:#0a0f1e;border:1px solid #1e293b;border-radius:8px;font-size:.78rem}
+.lb-item.gold{border-color:var(--gold);background:linear-gradient(135deg,#1e293b,#0f172a)}
+.lb-rank{font-weight:900;color:var(--gold);min-width:22px;font-size:.9rem}
+.lb-name{flex:1;font-weight:700;color:#cbd5e1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-wins{font-weight:800;color:#4ade80;font-size:.78rem}
+/* ACHIEVEMENTS */
 .achievements-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.ach-card{
-  padding:10px 6px;border-radius:10px;text-align:center;
-  background:#0a0f1e;border:1px solid #1e293b;
-  transition:all .2s;
-}
+.ach-card{padding:10px 6px;border-radius:10px;text-align:center;background:#0a0f1e;border:1px solid #1e293b;transition:all .2s}
 .ach-card.unlocked{background:linear-gradient(135deg,#1e293b,#0f172a);border-color:var(--gold);box-shadow:0 0 12px rgba(251,191,36,.2)}
 .ach-card.locked{opacity:.4;filter:grayscale(1)}
 .ach-icon{font-size:1.6rem;line-height:1;margin-bottom:4px}
 .ach-name{font-size:.6rem;font-weight:700;color:#cbd5e1;line-height:1.2}
 .ach-card.unlocked .ach-name{color:var(--gold)}
-/* ========== TOAST ========== */
+/* TOAST */
 .toast-wrap{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:3000;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(92vw,400px)}
-.toast{
-  background:linear-gradient(135deg,#fbbf24,#f59e0b);
-  color:#0f172a;padding:10px 18px;border-radius:12px;
-  font-weight:800;font-size:.82rem;
-  box-shadow:0 10px 30px rgba(251,191,36,.4),0 0 20px rgba(251,191,36,.3);
-  animation:toastIn .35s cubic-bezier(.34,1.56,.64,1);
-  display:flex;align-items:center;gap:10px;
-  border:2px solid #fcd34d;max-width:100%;
-}
+.toast{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;padding:10px 18px;border-radius:12px;font-weight:800;font-size:.82rem;box-shadow:0 10px 30px rgba(251,191,36,.4),0 0 20px rgba(251,191,36,.3);animation:toastIn .35s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:10px;border:2px solid #fcd34d;max-width:100%}
 .toast.info{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border-color:#60a5fa;box-shadow:0 10px 30px rgba(59,130,246,.4)}
 .toast.win{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-color:#34d399;box-shadow:0 10px 30px rgba(16,185,129,.4)}
 @keyframes toastIn{from{opacity:0;transform:translateY(-20px) scale(.9)}to{opacity:1;transform:none}}
 .toast .icon{font-size:1.4rem;line-height:1}
-/* ========== FOOTER ========== */
+/* FOOTER */
 .footer{width:100%;max-width:480px;text-align:center;padding:12px 0 6px 0;font-size:.7rem;font-weight:600;letter-spacing:.5px;margin-top:6px}
-.rainbow-text{
-  background:linear-gradient(270deg,#ff6b6b,#feca57,#48dbfb,#ff9ff3,#54a0ff,#5f27cd);
-  background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:rainbow 4s ease-in-out infinite;display:inline-block;
-}
+.rainbow-text{background:linear-gradient(270deg,#ff6b6b,#feca57,#48dbfb,#ff9ff3,#54a0ff,#5f27cd);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 4s ease-in-out infinite;display:inline-block}
 @keyframes rainbow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .firework{position:fixed;pointer-events:none;width:6px;height:6px;border-radius:50%;animation:firework-burst .8s ease-out forwards}
 @keyframes firework-burst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
@@ -484,10 +362,9 @@ body{
 
 <div class="log-box" id="log-box"></div>
 <div class="footer">
-  <span class="rainbow-text">♡ <span id="app-version">050826.07</span> from bao with love ♡</span>
+  <span class="rainbow-text">♡ <span id="app-version">150926.01</span> from bao with love ♡</span>
 </div>
 
-<!-- TOASTS -->
 <div class="toast-wrap" id="toast-wrap"></div>
 
 <!-- HELP MODAL -->
@@ -528,11 +405,16 @@ body{
       </ul>
     </div>
     <div class="modal-section">
+      <h4>🎁 Quà hàng ngày</h4>
+      <p>Mỗi ngày mở game, bạn nhận <strong>200-500 chips</strong> miễn phí!</p>
+    </div>
+    <div class="modal-section">
       <h4>💡 Mẹo</h4>
       <ul>
         <li>Bấm <strong>"Lật bài"</strong> nếu không muốn nặn từng lá</li>
         <li>Bấm <strong>ALL-IN</strong> khi tự tin có bài mạnh</li>
-        <li>Bot có phong cách khác nhau: aggressive, tight, wild, smart</li>
+        <li>Bot có phong cách: aggressive, tight, wild, smart</li>
+        <li>Bot có thể <strong>bluff</strong> — đừng tin lời nói!</li>
       </ul>
     </div>
   </div>
@@ -564,7 +446,7 @@ body{
 /* ============================================================
    APP VERSION
 ============================================================ */
-const APP_VERSION = '050826.08';
+const APP_VERSION = '150926.01';
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('app-version').textContent = APP_VERSION;
 });
@@ -575,10 +457,11 @@ document.addEventListener('DOMContentLoaded', () => {
 const Sound = {
   ctx: null,
   enabled: true,
-  init(){ if(!this.ctx) this.ctx = new(window.AudioContext||window.webkitAudioContext)(); },
+  init(){ if(!this.ctx){ try{ this.ctx = new(window.AudioContext||window.webkitAudioContext)(); }catch(e){} } },
   _play(freq, dur, type = 'sine', vol = 0.15, startAt = null){
     if(!this.enabled) return;
     this.init();
+    if(!this.ctx) return;
     const t = startAt ?? this.ctx.currentTime;
     const osc = this.ctx.createOscillator(), g = this.ctx.createGain();
     osc.type = type;
@@ -595,9 +478,10 @@ const Sound = {
   playAngry(){ this._play(200, 0.2, 'square', 0.15); },
   playHappy(){ [523,659,784].forEach((f,i)=> this._play(f, 0.12, 'sine', 0.15, this.ctx ? this.ctx.currentTime + i*0.08 : null)); },
   playBaCao(){ [523,659,784,1047,784,659].forEach((f,i)=> this._play(f, 0.15, 'sine', 0.2, this.ctx ? this.ctx.currentTime + i*0.1 : null)); },
-  playCharge(){ 
+  playCharge(){
     if(!this.enabled) return;
     this.init();
+    if(!this.ctx) return;
     const t = this.ctx.currentTime;
     const osc = this.ctx.createOscillator(), g = this.ctx.createGain();
     osc.type = 'sine';
@@ -609,6 +493,11 @@ const Sound = {
     osc.start(t); osc.stop(t + 0.3);
   }
 };
+
+/* Sound resume on user click (fix Chrome autoplay) */
+document.addEventListener('click', () => {
+  if(Sound.ctx && Sound.ctx.state === 'suspended') Sound.ctx.resume();
+});
 
 /* ============================================================
    HELPERS
@@ -634,10 +523,53 @@ function getRankName(r){
 }
 function getRandomBotStack(){ return Math.floor(Math.random() * 151 + 50) * 10; }
 
+/* Haptic */
+function vibrate(pattern){
+  try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
+}
+
+/* Confetti */
+function createConfetti(count = 50){
+  const colors = ['#fbbf24','#f59e0b','#ef4444','#3b82f6','#10b981','#8b5cf6','#ec4899','#f472b6'];
+  for(let i = 0; i < count; i++){
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.left = (Math.random()*100) + 'vw';
+    el.style.animationDelay = (Math.random()*0.6) + 's';
+    el.style.animationDuration = (1.8 + Math.random()*1.6) + 's';
+    if(Math.random() > 0.5) el.style.borderRadius = '50%';
+    if(Math.random() > 0.6) el.style.width = '8px';
+    if(Math.random() > 0.6) el.style.height = '8px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
 /* ============================================================
-   PERSISTENT STATE (localStorage)
+   BOT QUOTES
 ============================================================ */
-const LS_KEY = 'baicao_rix_pro_v2';
+const BOT_QUOTES = {
+  deal: ['Chia đi!', 'Nhanh lên!', 'Bài tới đi!', 'Chơi thôi!', 'Tới luôn!', 'Ván này tao thắng!'],
+  win:  ['Thắng rồi! 🎉', 'Hên quá!', 'Chuẩn luôn!', 'Biết ngay mà!', 'Dễ ợt!', 'Cảm ơn nhé!'],
+  lose: ['Chia lại đi!', 'Hên thôi!', 'Ván sau nha!', 'Hụt rồi!', 'Đen thật!', 'Không phục!'],
+  bacao:['BA CÀO! 🎉', 'Thấy chưa!', 'Đỉnh chưa!', 'Bất bại!', 'Số 1!'],
+  bluff:['Bài tao mạnh lắm!', 'All-in đi!', 'Tao có Ba Cào!', 'Không đỡ được đâu!']
+};
+
+function botSpeak(pIdx, type){
+  const p = players[pIdx];
+  if(!p || p.isHuman) return;
+  const quotes = BOT_QUOTES[type];
+  if(!quotes) return;
+  const q = quotes[Math.floor(Math.random()*quotes.length)];
+  setTimeout(() => showSpeech(pIdx, q), Math.random() * 300);
+}
+
+/* ============================================================
+   PERSISTENT STATE
+============================================================ */
+const LS_KEY = 'baicao_rix_pro_v3';
 
 const defaultPersist = {
   humanChips: 1000,
@@ -647,10 +579,16 @@ const defaultPersist = {
     streak: 0, bestStreak: 0,
     baCaoCount: 0, nineNutCount: 0, comebacks: 0,
     peakChips: 1000,
+    botWins: {},
     history: []
   },
-  achievements: {},  // {id: timestamp}
-  settings: { sound: true, lastBet: 10, lastMode: 'turtle' }
+  achievements: {},
+  settings: {
+    sound: true,
+    lastBet: 10,
+    lastMode: 'turtle',
+    lastDaily: ''
+  }
 };
 
 function loadPersist(){
@@ -660,6 +598,7 @@ function loadPersist(){
     const parsed = JSON.parse(raw);
     const merged = { ...JSON.parse(JSON.stringify(defaultPersist)), ...parsed };
     merged.stats = { ...defaultPersist.stats, ...(parsed.stats || {}) };
+    merged.stats.botWins = merged.stats.botWins || {};
     merged.settings = { ...defaultPersist.settings, ...(parsed.settings || {}) };
     return merged;
   } catch(e){
@@ -668,22 +607,22 @@ function loadPersist(){
 }
 let persist = loadPersist();
 function savePersist(){
-  try{ localStorage.setItem(LS_KEY, JSON.stringify(persist)); } catch(e){}
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(persist)); }catch(e){}
 }
 
 /* ============================================================
    ACHIEVEMENTS
 ============================================================ */
 const ACHIEVEMENTS = [
-  { id:'first_win',   icon:'🥇', name:'Ván đầu thắng',     check:s => s.wins >= 1 },
-  { id:'first_bacao', icon:'🎉', name:'Ba Cào đầu tiên',    check:s => s.baCaoCount >= 1 },
-  { id:'streak3',     icon:'🔥', name:'Chuỗi 3 thắng',      check:s => s.bestStreak >= 3 },
-  { id:'streak5',     icon:'💥', name:'Chuỗi 5 thắng',      check:s => s.bestStreak >= 5 },
-  { id:'games10',     icon:'🎲', name:'Chơi 10 ván',        check:s => s.gamesPlayed >= 10 },
-  { id:'games50',     icon:'🎯', name:'Chơi 50 ván',        check:s => s.gamesPlayed >= 50 },
-  { id:'rich',        icon:'💎', name:'Triệu phú',          check:s => s.peakChips >= 100000 },
-  { id:'bacao_master',icon:'👑', name:'Ba Cào 5 lần',       check:s => s.baCaoCount >= 5 },
-  { id:'comeback',    icon:'🦅', name:'Hồi sinh từ 0',      check:s => s.comebacks >= 1 }
+  { id:'first_win',    icon:'🥇', name:'Ván đầu thắng',    check:s => s.wins >= 1 },
+  { id:'first_bacao',  icon:'🎉', name:'Ba Cào đầu tiên',   check:s => s.baCaoCount >= 1 },
+  { id:'streak3',      icon:'🔥', name:'Chuỗi 3 thắng',     check:s => s.bestStreak >= 3 },
+  { id:'streak5',      icon:'💥', name:'Chuỗi 5 thắng',     check:s => s.bestStreak >= 5 },
+  { id:'games10',      icon:'🎲', name:'Chơi 10 ván',       check:s => s.gamesPlayed >= 10 },
+  { id:'games50',      icon:'🎯', name:'Chơi 50 ván',       check:s => s.gamesPlayed >= 50 },
+  { id:'rich',         icon:'💎', name:'Triệu phú',         check:s => s.peakChips >= 100000 },
+  { id:'bacao_master', icon:'👑', name:'Ba Cào 5 lần',      check:s => s.baCaoCount >= 5 },
+  { id:'comeback',     icon:'🦅', name:'Hồi sinh từ 0',     check:s => s.comebacks >= 1 }
 ];
 
 function checkAchievements(){
@@ -698,6 +637,8 @@ function checkAchievements(){
     showToast(`${newUnlock.icon} Mở khóa: ${newUnlock.name}`, 'win');
     log(`🏆 THÀNH TỰU MỚI: ${newUnlock.name}`, 'achievement');
     Sound.playHappy();
+    vibrate([50, 30, 50, 30, 100]);
+    createConfetti(40);
     savePersist();
     updateAchBadge();
   }
@@ -725,7 +666,7 @@ function showToast(msg, type = ''){
 }
 
 /* ============================================================
-   MODAL HELPERS
+   MODAL
 ============================================================ */
 function openModal(id){ $(id).classList.add('open'); }
 function closeModal(id){ $(id).classList.remove('open'); }
@@ -793,13 +734,14 @@ function log(msg, type = ''){
   line.className = `log-line ${type}`;
   line.innerHTML = msg;
   box.insertBefore(line, box.firstChild);
-  // Keep log at most 60 lines
   while(box.children.length > 60) box.removeChild(box.lastChild);
 }
 function showSpeech(pIdx, text){
   const b = $(`bubble-${pIdx}`);
-  b.innerText = text; b.classList.add('show');
-  setTimeout(() => b.classList.remove('show'), 1600);
+  if(!b) return;
+  b.innerText = text;
+  b.classList.add('show');
+  setTimeout(() => b.classList.remove('show'), 1800);
 }
 function setStatus(msg){ statusBar.innerText = msg; }
 function adjustBet(d){
@@ -809,8 +751,6 @@ function adjustBet(d){
   persist.settings.lastBet = v;
   savePersist();
 }
-
-/* Bet presets */
 function setBetPreset(type){
   const chips = players[0].chips;
   let val = parseInt(betInput.value) || 10;
@@ -824,10 +764,9 @@ function setBetPreset(type){
   persist.settings.lastBet = val;
   savePersist();
   Sound.playChip();
+  vibrate(15);
 }
-
-/* Chip flying animation */
-function chipFly(fromIdx, toPot = true){
+function chipFly(fromIdx){
   const from = $(`seat-${fromIdx}`);
   if(!from) return;
   const fromRect = from.getBoundingClientRect();
@@ -847,7 +786,7 @@ function chipFly(fromIdx, toPot = true){
 }
 
 /* ============================================================
-   DECK & CARDS
+   DECK
 ============================================================ */
 function createDeck(){
   const suits = ['♠','♥','♦','♣'];
@@ -902,16 +841,15 @@ function renderAllCards(forceReveal = false){
     if(dealerIndex === i) seat.classList.add('dealer');
   });
 }
-
-/* Update pot box with bump */
 function updatePot(animate = false){
   const el = $('pot-display');
   el.innerHTML = `🪙 TIỀN GIỮA: ${fmt(pot)}`;
   if(animate){
-    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+    el.classList.remove('bump');
+    void el.offsetWidth;
+    el.classList.add('bump');
   }
 }
-
 function updateUI(){
   updatePot(false);
   const totalChips = players.reduce((s, p) => s + p.chips, 0) || 1;
@@ -920,7 +858,7 @@ function updateUI(){
     $(`chips-${i}`).innerText = fmt(p.chips);
     const bar = $(`chipbar-${i}`);
     if(bar){
-      const pct = Math.min(100, Math.max(0, (p.chips / totalChips) * 100));
+      const pct = Math.min(100, Math.max(3, (p.chips / totalChips) * 100));
       bar.style.width = pct + '%';
     }
   });
@@ -973,7 +911,8 @@ function resetRound(){
   expectedRanks = []; expectedType = 'none'; expectedName = '';
   cardsFlippedManually = false; playerCardElements = [];
   gameState = 'IDLE';
-  document.querySelectorAll('.seat').forEach(s => s.classList.remove('winner','thinking'));
+  // Reset thinking indicator + winner
+  document.querySelectorAll('.seat').forEach(s => s.classList.remove('winner','thinking','dealer'));
   chargeEffect.classList.remove('active');
   delete chargeEffect.dataset.charged;
   setStatus('🎯 Đặt cược và chia bài!');
@@ -1028,13 +967,13 @@ function botBetStrategy(playerIdx){
   else base = 0.15;
 
   if(!p.hand || p.hand.length === 0){
-    // Pre-deal: some styles bluff with bigger bets
     if(style === 'wild') base = 0.3 + Math.random() * 0.3;
     else if(style === 'aggressive') base = 0.25 + Math.random() * 0.25;
     else base = 0.15 + Math.random() * 0.15;
   } else if(score.score <= 3 && Math.random() < 0.15){
-    // Bluff chance: act confident with bad hand
     base = 0.4 + Math.random() * 0.2;
+    // Bluff chat
+    setTimeout(() => botSpeak(playerIdx, 'bluff'), 100);
   }
 
   let maxBet = Math.floor(p.chips * maxRatio);
@@ -1046,7 +985,6 @@ function botBetStrategy(playerIdx){
   return target;
 }
 
-/* Async bot thinking + betting */
 async function botPlaceBet(i){
   const seat = $(`seat-${i}`);
   seat.classList.add('thinking');
@@ -1064,7 +1002,7 @@ async function botPlaceBet(i){
   pot += botBet;
   allBets[i] = botBet;
 
-  chipFly(i, true);
+  chipFly(i);
   Sound.playChip();
   updatePot(true);
   updateUI();
@@ -1106,7 +1044,7 @@ function evaluatePotential(two){
 ============================================================ */
 async function placeBet(){
   if(gameState === 'SHOWDOWN'){
-    log('Ván đã kết thúc, bấm "Ván tiếp" để chơi mới.', 'alert');
+    log('Ván đã kết thúc, bấm "Ván tiếp".', 'alert');
     return;
   }
   const human = players[0];
@@ -1122,11 +1060,10 @@ async function placeBet(){
     human.bet = amount;
     pot += amount;
     allBets[0] = amount;
-    chipFly(0, true);
+    chipFly(0);
     Sound.playChip();
     updatePot(true);
 
-    // Bots bet (async with thinking)
     for(let i = 1; i < players.length; i++){
       await botPlaceBet(i);
     }
@@ -1140,7 +1077,7 @@ async function placeBet(){
     if(isHumanDealer){
       human.bet = 0; allBets[0] = 0;
       log('🧑 Bạn là nhà cái, không cần đặt cược.', 'gold');
-      setStatus('Bạn là cái, không cược. Bấm "Chia bài" để bắt đầu ván.');
+      setStatus('Bạn là cái, không cược. Bấm "Chia bài" để bắt đầu.');
     } else {
       if(amount > human.chips){
         log(`Bạn chỉ có ${fmt(human.chips)}, không đủ cược!`, 'alert');
@@ -1150,7 +1087,7 @@ async function placeBet(){
       human.bet = amount;
       pot += amount;
       allBets[0] = amount;
-      chipFly(0, true);
+      chipFly(0);
       Sound.playChip();
       updatePot(true);
       log(`Bạn đặt cược ${fmt(amount)}`, 'gold');
@@ -1177,7 +1114,7 @@ async function placeBet(){
 ============================================================ */
 async function dealCards(){
   if(gameState !== 'BETTING'){
-    log('Hãy đặt cược trước khi chia bài!', 'alert');
+    log('Hãy đặt cược trước!', 'alert');
     return;
   }
   if(deck.length < 12) createDeck();
@@ -1205,8 +1142,12 @@ async function dealCards(){
   renderAllCards(false);
   updateUI();
 
-  log('✅ Chia bài xong! Bấm "Nặn bài" để bắt đầu nặn từng lá.', 'gold');
-  setStatus('👀 Bấm "Nặn bài" để lật từng lá, hoặc "Lật bài" để xem nhanh!');
+  // Bot chat after deal
+  const botIdx = 1 + Math.floor(Math.random() * 3);
+  botSpeak(botIdx, 'deal');
+
+  log('✅ Chia bài xong! Bấm "Nặn bài" để nặn từng lá.', 'gold');
+  setStatus('👀 Bấm "Nặn bài" để lật từng lá, hoặc "Lật bài"!');
   $('btn-peek').disabled = false;
   $('btn-flip-all').disabled = false;
   $('btn-showdown').disabled = true;
@@ -1238,8 +1179,8 @@ async function animateDealCard(targetId, fromIdx = 0){
 async function nanCardStep(){
   if(gameState !== 'DEALING' || isNanning) return;
   if(players[0].hand.length !== 3){ log('Chưa có bài!', 'alert'); return; }
-  if(nanningPhase >= 3){ log('Đã nặn hết 3 lá! Bấm "Kết quả".', 'gold'); return; }
-  if(cardsFlippedManually){ log('Bạn đã lật toàn bộ bài.', 'gold'); return; }
+  if(nanningPhase >= 3){ log('Đã nặn hết 3 lá!', 'gold'); return; }
+  if(cardsFlippedManually){ log('Bạn đã lật toàn bộ.', 'gold'); return; }
 
   isNanning = true;
   $('btn-peek').disabled = true;
@@ -1255,6 +1196,7 @@ async function nanCardStep(){
   cardEl.classList.remove('nanning');
   cardEl.classList.add('flipped');
   Sound.playCard();
+  vibrate(20);
   nanningPhase = idx + 1;
 
   if(nanningPhase === 1){
@@ -1269,13 +1211,14 @@ async function nanCardStep(){
       expectedName = potential.expectedName;
       chargeEffect.classList.add('active');
       Sound.playCharge();
+      vibrate([30, 20, 30, 20, 60]);
       if(potential.type === 'ba_cao'){
         showSpeech(0, '🔥 Cần Tây nữa!');
         log('🔥 Cần lá Tây nữa là BA CÀO!', 'special');
         setStatus('⚡ Tụ lực cho BA CÀO!');
       } else if(potential.type === 'nut9'){
         showSpeech(0, `🔥 Cần ${potential.expectedName}!`);
-        log(`🔥 Cần lá ${potential.expectedName} nữa là 9 NÚT!`, 'special');
+        log(`🔥 Cần ${potential.expectedName} nữa là 9 NÚT!`, 'special');
         setStatus('⚡ Tụ lực cho 9 NÚT!');
       }
       $('poker-table').classList.add('shake');
@@ -1296,25 +1239,30 @@ async function nanCardStep(){
 
     if(score.isBaCao){
       Sound.playBaCao();
+      vibrate([100, 50, 100, 50, 200]);
       setStatus('🎉 BA CÀO! BẤT BẠI!');
       log('🎉 BA CÀO! BẠN CÓ BA CÀO!', 'winner');
       showSpeech(0, '🎉 BA CÀO!');
       allCards.forEach(el => el.classList.add('glow-rainbow'));
       createFireworks(0);
+      createConfetti(60);
       $('poker-table').classList.add('shake');
       Sound.playShake();
       setTimeout(() => $('poker-table').classList.remove('shake'), 400);
       persist.stats.baCaoCount++;
     } else if(isHit && score.score === 9){
       Sound.playWin();
+      vibrate([60, 40, 60]);
       setStatus('🔥 9 NÚT! SIÊU ĐỈNH!');
       log('🔥 9 NÚT! CỰC MẠNH!', 'winner');
       showSpeech(0, '🔥 9 NÚT!');
       allCards.forEach(el => el.classList.add('glow-gold'));
       createFireworks(0);
+      createConfetti(40);
       persist.stats.nineNutCount++;
     } else if(score.score >= 8){
       Sound.playHappy();
+      vibrate(50);
       setStatus(`✨ ${score.score} NÚT! RẤT TỐT!`);
       log(`✨ Bạn có ${score.score} nút!`, 'gold');
       showSpeech(0, `✨ ${score.score} NÚT`);
@@ -1332,6 +1280,7 @@ async function nanCardStep(){
       allCards.forEach(el => el.classList.add('glow-blue'));
     } else {
       Sound.playAngry();
+      vibrate([100, 50, 100]);
       setStatus(`😢 ${score.score} NÚT!`);
       log(`😢 Bạn có ${score.score} nút.`, 'alert');
       showSpeech(0, `😢 ${score.score} NÚT`);
@@ -1380,12 +1329,12 @@ async function flipAllCards(){
 
   const score = calcScore(players[0].hand);
   let msg = '', glow = '';
-  if(score.isBaCao){ msg='🎉 BA CÀO!'; glow='glow-rainbow'; Sound.playBaCao(); createFireworks(0); persist.stats.baCaoCount++; }
-  else if(score.score >= 9){ msg='🔥 9 NÚT!'; glow='glow-gold'; Sound.playWin(); createFireworks(0); persist.stats.nineNutCount++; }
-  else if(score.score >= 8){ msg='✨ 8 NÚT!'; glow='glow-gold'; Sound.playHappy(); createFireworks(0); }
+  if(score.isBaCao){ msg='🎉 BA CÀO!'; glow='glow-rainbow'; Sound.playBaCao(); vibrate([100,50,100,50,200]); createFireworks(0); createConfetti(60); persist.stats.baCaoCount++; }
+  else if(score.score >= 9){ msg='🔥 9 NÚT!'; glow='glow-gold'; Sound.playWin(); vibrate([60,40,60]); createFireworks(0); createConfetti(40); persist.stats.nineNutCount++; }
+  else if(score.score >= 8){ msg='✨ 8 NÚT!'; glow='glow-gold'; Sound.playHappy(); vibrate(50); createFireworks(0); }
   else if(score.score >= 6){ msg=`👍 ${score.score} NÚT`; glow='glow-blue'; Sound.playCard(); }
   else if(score.score >= 4){ msg=`😐 ${score.score} NÚT`; glow='glow-blue'; Sound.playCard(); }
-  else { msg=`😢 ${score.score} NÚT`; glow='glow-red'; Sound.playAngry(); }
+  else { msg=`😢 ${score.score} NÚT`; glow='glow-red'; Sound.playAngry(); vibrate([100,50,100]); }
   allCards.forEach(el => el.classList.add(glow));
   showSpeech(0, msg);
   setStatus(`📋 Đã lật: ${msg}`);
@@ -1412,7 +1361,15 @@ function showdown(){
   renderAllCards(true);
 
   let results = players.map((p, idx) => ({index: idx, player: p, score: calcScore(p.hand)}));
-  let humanResult = 'draw'; // track for stats
+  let humanResult = 'draw';
+  let humanProfit = 0;
+
+  // Bot Ba Cào chat
+  results.forEach(r => {
+    if(!r.player.isHuman && r.score.isBaCao){
+      setTimeout(() => botSpeak(r.index, 'bacao'), 200 + Math.random() * 400);
+    }
+  });
 
   if(gameMode === 'turtle'){
     let maxScore = -1, maxIsBaCao = false;
@@ -1440,31 +1397,42 @@ function showdown(){
         $(`seat-${w.index}`).classList.add('winner');
         Sound.playWin();
         createFireworks(w.index);
+        // Bot chat
+        if(!w.player.isHuman) botSpeak(w.index, 'win');
+        // Bot wins tracking
+        if(!w.player.isHuman){
+          persist.stats.botWins[w.player.name] = (persist.stats.botWins[w.player.name] || 0) + 1;
+        }
       });
       if(roundWinners.length > 1) log(`🤝 Hòa: ${roundWinners.map(w=>w.player.name).join(', ')}`, 'gold');
 
-      // Stats
       if(humanWon && humanTied) humanResult = 'draw';
       else if(humanWon) humanResult = 'win';
       else humanResult = 'loss';
-      const humanProfit = humanWon ? share - players[0].bet : -players[0].bet;
-      if(humanResult === 'win'){
-        const won = Math.floor(pot / roundWinners.length) - players[0].bet;
-        if(won > persist.stats.biggestWin) persist.stats.biggestWin = won;
-      }
+      if(humanWon){
+        humanProfit = Math.floor(pot / roundWinners.length) - players[0].bet;
+        if(humanProfit > persist.stats.biggestWin) persist.stats.biggestWin = humanProfit;
+      } else humanProfit = -players[0].bet;
+
+      // Bot losers chat
+      results.forEach(r => {
+        if(!r.player.isHuman && !roundWinners.some(w => w.index === r.index)){
+          botSpeak(r.index, 'lose');
+        }
+      });
+
       pot = 0;
     } else {
       log('Không có người thắng (lỗi).', 'alert');
     }
   } else {
-    // Cào cái: gộp pot vào tay cái trước
+    // Cào cái
     const dealer = players[dealerIndex];
     dealer.chips += pot;
     const totalPool = pot;
     pot = 0;
 
     let hasWinner = false, hasDraw = false;
-    let humanProfit = 0;
 
     for(let i = 0; i < players.length; i++){
       if(i === dealerIndex) continue;
@@ -1482,9 +1450,11 @@ function showdown(){
         $(`seat-${i}`).classList.add('winner');
         Sound.playWin();
         createFireworks(i);
+        if(!p.isHuman) botSpeak(i, 'win');
         if(i === 0) humanProfit = profit;
       } else if(comp === -1){
         log(`❌ ${p.name} thua cái, mất ${fmt(p.bet)}`, 'alert');
+        if(!p.isHuman) botSpeak(i, 'lose');
         if(i === 0) humanProfit = -p.bet;
       } else {
         hasDraw = true;
@@ -1495,29 +1465,24 @@ function showdown(){
       }
     }
 
-    if(dealerIndex === 0){
-      // Human is dealer
-      const dealerProfit = totalPool - dealer.chips + (players.filter((p,i) => i !== 0).reduce((s,p) => s + 0, 0)); // not used
-    }
-
     if(!hasWinner && !hasDraw){
       $(`seat-${dealerIndex}`).classList.add('winner');
       const handName = calcScore(dealer.hand).isBaCao ? 'BA CÀO' : `${calcScore(dealer.hand).score} NÚT`;
       log(`🏦 Cái thắng tất cả với [${handName}]!`, 'winner');
       Sound.playWin();
       createFireworks(dealerIndex);
+      if(!dealer.isHuman) botSpeak(dealerIndex, 'win');
+      else createConfetti(40);
+      // Bot wins tracking
+      if(!dealer.isHuman){
+        persist.stats.botWins[dealer.name] = (persist.stats.botWins[dealer.name] || 0) + 1;
+      }
     }
 
     // Human result
     if(dealerIndex === 0){
-      // Human is dealer - inverse result
-      const humanChipsBefore = totalPool + dealer.chips; // rough
-      // Compute by comparing to bots
-      let dealerOutcome = 0;
-      // Dealer wins if all bots lose; if any win, dealer loses
       const anyBotWon = players.some((p,i) => i !== 0 && compareHands(p.hand, dealer.hand) === 1);
-      if(anyBotWon) humanResult = 'loss';
-      else humanResult = 'win';
+      humanResult = anyBotWon ? 'loss' : 'win';
     } else {
       if(humanProfit > 0) humanResult = 'win';
       else if(humanProfit < 0) humanResult = 'loss';
@@ -1532,14 +1497,16 @@ function showdown(){
     persist.stats.wins++;
     persist.stats.streak++;
     if(persist.stats.streak > persist.stats.bestStreak) persist.stats.bestStreak = persist.stats.streak;
+    vibrate([40, 60, 40]);
   } else if(humanResult === 'loss'){
     persist.stats.losses++;
     persist.stats.streak = 0;
+    vibrate([100]);
   } else {
     persist.stats.draws++;
+    vibrate([60, 40, 60]);
   }
   if(players[0].chips > persist.stats.peakChips) persist.stats.peakChips = players[0].chips;
-  // History (10 most recent)
   persist.stats.history.unshift({
     mode: gameMode,
     result: humanResult,
@@ -1548,11 +1515,9 @@ function showdown(){
   });
   if(persist.stats.history.length > 10) persist.stats.history.length = 10;
 
-  // Save human chips
   persist.humanChips = players[0].chips;
   savePersist();
 
-  // Check comeback
   if(players[0].chips > 0 && persist.stats.lastZeroChips){
     persist.stats.comebacks++;
     delete persist.stats.lastZeroChips;
@@ -1567,10 +1532,12 @@ function showdown(){
   Sound.playShake();
   setTimeout(() => $('poker-table').classList.remove('shake'), 400);
 
-  // Result toast
-  if(humanResult === 'win') showToast(`🎉 Bạn thắng ván này!`, 'win');
-  else if(humanResult === 'loss') showToast(`😢 Thua rồi, cố ván sau!`, 'info');
-  else showToast(`🤝 Hòa ván này.`, 'info');
+  if(humanResult === 'win'){
+    showToast(`🎉 Bạn thắng ván này!`, 'win');
+    createConfetti(50);
+  } else if(humanResult === 'loss'){
+    showToast(`😢 Thua rồi, cố ván sau!`, 'info');
+  } else showToast(`🤝 Hòa ván này.`, 'info');
 
   checkAchievements();
   updateAchBadge();
@@ -1596,7 +1563,7 @@ function resetForNextRound(){
   if(players[0].chips <= 0){
     players[0].chips = REVIVE_CHIPS;
     persist.stats.lastZeroChips = true;
-    log(`💰 Bạn hết tiền! Được cấp lại ${fmt(REVIVE_CHIPS)} để gỡ.`, 'gold');
+    log(`💰 Bạn hết tiền! Được cấp lại ${fmt(REVIVE_CHIPS)}.`, 'gold');
     showToast(`💰 Hồi sinh với ${fmt(REVIVE_CHIPS)}`, 'info');
   }
   persist.humanChips = players[0].chips;
@@ -1695,6 +1662,12 @@ function createFireworks(seatId){
 function showStats(){
   const s = persist.stats;
   const winRate = s.gamesPlayed ? ((s.wins / s.gamesPlayed) * 100).toFixed(1) : '0.0';
+
+  // Bot leaderboard
+  const botEntries = Object.entries(s.botWins || {})
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
   const html = `
     <div class="stats-grid">
       <div class="stat-card"><div class="v">${s.gamesPlayed}</div><div class="l">Ván đã chơi</div></div>
@@ -1712,6 +1685,20 @@ function showStats(){
       <p style="font-size:.8rem;color:#cbd5e1">Thắng lớn nhất: <strong style="color:#4ade80">${fmt(s.biggestWin)}</strong></p>
       <p style="font-size:.8rem;color:#cbd5e1">Hiện có: <strong style="color:var(--gold)">${fmt(persist.humanChips)}</strong></p>
     </div>
+    ${botEntries.length ? `
+      <div class="modal-section">
+        <h4>🤖 BXH Bot thắng nhiều</h4>
+        <div class="leaderboard">
+          ${botEntries.map((e, i) => `
+            <div class="lb-item ${i === 0 ? 'gold' : ''}">
+              <span class="lb-rank">#${i+1}</span>
+              <span class="lb-name">${e[0]}</span>
+              <span class="lb-wins">${e[1]} 🏆</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    ` : ''}
     ${s.history.length ? `
       <div class="modal-section">
         <h4>📜 10 ván gần đây</h4>
@@ -1762,6 +1749,29 @@ function showAchievements(){
 }
 
 /* ============================================================
+   DAILY REWARD
+============================================================ */
+function checkDaily(){
+  const today = new Date().toDateString();
+  if(persist.settings.lastDaily === today) return;
+
+  const reward = 200 + Math.floor(Math.random() * 301);
+  players[0].chips += reward;
+  persist.humanChips = players[0].chips;
+  persist.settings.lastDaily = today;
+  savePersist();
+
+  setTimeout(() => {
+    showToast(`🎁 Quà hàng ngày: +${fmt(reward)}`, 'win');
+    log(`🎁 Quà hàng ngày: +${fmt(reward)}!`, 'achievement');
+    Sound.playWin();
+    vibrate([60, 40, 60]);
+    createConfetti(60);
+    updateUI();
+  }, 600);
+}
+
+/* ============================================================
    SOUND TOGGLE
 ============================================================ */
 function toggleSound(){
@@ -1772,13 +1782,14 @@ function toggleSound(){
   btn.textContent = Sound.enabled ? '🔊' : '🔇';
   btn.classList.toggle('muted', !Sound.enabled);
   showToast(Sound.enabled ? 'Bật âm thanh' : 'Tắt âm thanh', 'info');
+  if(Sound.enabled) Sound.playChip();
 }
 
 /* ============================================================
    RESET ALL
 ============================================================ */
 function resetAll(){
-  if(!confirm('Chơi lại từ đầu? Toàn bộ chips và thống kê sẽ reset về ban đầu.')) return;
+  if(!confirm('Chơi lại từ đầu? Toàn bộ chips và thống kê sẽ reset.')) return;
   localStorage.removeItem(LS_KEY);
   persist = loadPersist();
   shuffledCelebs = shuffleArray(CELEB_POOL);
@@ -1795,7 +1806,6 @@ function resetAll(){
    INIT
 ============================================================ */
 function init(){
-  // Wire toolbar
   Sound.enabled = persist.settings.sound !== false;
   $('btn-sound').textContent = Sound.enabled ? '🔊' : '🔇';
   $('btn-sound').classList.toggle('muted', !Sound.enabled);
@@ -1805,14 +1815,12 @@ function init(){
   $('btn-help').addEventListener('click', () => openModal('modal-help'));
   $('btn-reset').addEventListener('click', resetAll);
 
-  // Restore last bet
   betInput.value = persist.settings.lastBet || 10;
 
   createDeck();
   initPlayers();
   resetRound();
 
-  // Restore last mode
   if(persist.settings.lastMode === 'dealer'){
     gameMode = 'dealer';
     $('mode-turtle').classList.remove('active');
@@ -1830,6 +1838,9 @@ function init(){
   setStatus('🎯 Chọn mode, đặt cược và chia bài!');
   updateUI();
   updateAchBadge();
+
+  // Daily reward check
+  checkDaily();
 }
 init();
 </script>
