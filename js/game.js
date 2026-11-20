@@ -1103,7 +1103,7 @@ function toggleSound(){
   persist.settings.sound = Sound.enabled;
   savePersist();
   const btn = $('btn-sound');
-  btn.textContent = Sound.enabled ? '🔊' : '🔇';
+  btn.innerHTML = Sound.enabled ? '<i class="fas fa-volume-high"></i>' : '<i class="fas fa-volume-xmark"></i>';
   btn.classList.toggle('muted', !Sound.enabled);
   showToast(Sound.enabled ? 'Bật âm thanh' : 'Tắt âm thanh', 'info');
   if(Sound.enabled) Sound.playChip();
@@ -1131,7 +1131,7 @@ function resetAll(){
 ============================================================ */
 function init(){
   Sound.enabled = persist.settings.sound !== false;
-  $('btn-sound').textContent = Sound.enabled ? '🔊' : '🔇';
+  $('btn-sound').innerHTML = Sound.enabled ? '<i class="fas fa-volume-high"></i>' : '<i class="fas fa-volume-xmark"></i>';
   $('btn-sound').classList.toggle('muted', !Sound.enabled);
   $('btn-sound').addEventListener('click', toggleSound);
 
